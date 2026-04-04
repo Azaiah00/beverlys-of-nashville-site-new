@@ -21,7 +21,7 @@ export const revenuePillars = [
     audience: "Nashville women (25–55) seeking high-end, reliable hair care",
     channel: "Instagram Reels, TikTok local SEO, and Google Business Profile",
     color: "gold",
-    icon: "✂️",
+    icon: "scissors",
   },
   {
     id: "wigs",
@@ -31,7 +31,7 @@ export const revenuePillars = [
     audience: "Every woman who wants to transform her look, protect her hair, or restore her confidence — 8 distinct segments from fashion enthusiasts to cancer patients",
     channel: "TikTok/Instagram for fashion segments, YouTube for education, Google SEO for medical, oncology partnerships for cranial prostheses",
     color: "gold",
-    icon: "👑",
+    icon: "crown",
   },
   {
     id: "academy",
@@ -41,7 +41,7 @@ export const revenuePillars = [
     audience: "Aspiring cosmetologists and seasoned stylists seeking advanced skills",
     channel: "TikTok educational content, email marketing funnels, and industry networking",
     color: "gold",
-    icon: "🎓",
+    icon: "graduation-cap",
   },
   {
     id: "content",
@@ -51,7 +51,7 @@ export const revenuePillars = [
     audience: "Global audience interested in hair transformations and education",
     channel: "YouTube Partner Program, TikTok Creator Rewards, and affiliate links",
     color: "gold",
-    icon: "📱",
+    icon: "smartphone",
   },
 ];
 
@@ -66,7 +66,7 @@ export const wigMarketOverview = {
 export const wigAudienceSegments = [
   {
     id: "fashion",
-    icon: "👑",
+    icon: "crown",
     segment: "Fashion & Style Enthusiasts",
     description: "Women who wear wigs as a fashion accessory — changing their look as often as they change their outfit. This is the largest and fastest-growing segment, driven by celebrity culture, social media, and the normalization of wigs as everyday style.",
     size: "Largest segment — millions of women nationwide",
@@ -78,7 +78,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "protective",
-    icon: "🌿",
+    icon: "leaf",
     segment: "Protective Styling Women",
     description: "Black women and women of color who wear wigs as a protective styling method to preserve the health of their natural hair. This is a deeply rooted cultural practice and a massive market — Black women spend 6x more on hair care than other demographics.",
     size: "$3.2B Black hair care market (2023); Black women spend $503/year on average",
@@ -90,7 +90,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "convenience",
-    icon: "⚡",
+    icon: "zap",
     segment: "Busy Professionals & Moms",
     description: "Women who wear wigs for pure convenience — eliminating the daily time spent on hair styling. A custom wig means waking up camera-ready in minutes. This segment is growing rapidly as women prioritize time efficiency.",
     size: "Massive — any professional woman or mother is a potential customer",
@@ -102,7 +102,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "hairloss",
-    icon: "🌸",
+    icon: "flower",
     segment: "Hormonal & Genetic Hair Loss",
     description: "Women experiencing hair thinning or loss due to hormonal changes — including menopause, postpartum shedding, thyroid disorders, PCOS, and androgenetic alopecia. This is an underserved segment that desperately needs compassionate, expert solutions.",
     size: "50M+ women in the US experience some form of hair loss",
@@ -114,7 +114,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "medical",
-    icon: "💜",
+    icon: "heart-pulse",
     segment: "Cancer Patients & Medical Hair Loss",
     description: "Women undergoing chemotherapy or other medical treatments that cause hair loss. This segment requires the highest level of compassion, expertise, and certification. Beverly's can bill insurance for cranial prostheses, making this both a community service and a high-revenue opportunity.",
     size: "Hundreds of thousands of women undergo chemo annually in the US",
@@ -126,7 +126,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "alopecia",
-    icon: "🦋",
+    icon: "feather",
     segment: "Alopecia Community",
     description: "Women living with alopecia areata, totalis, or universalis — a community that is deeply connected, vocal on social media, and actively seeking expert wig specialists. This community shares recommendations widely and is extremely loyal to trusted providers.",
     size: "6.8 million Americans have alopecia areata; global community is massive on social media",
@@ -138,7 +138,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "bridal",
-    icon: "💍",
+    icon: "gem",
     segment: "Bridal & Special Occasion",
     description: "Brides and women attending major life events who want flawless, guaranteed hair for their most important moments. A custom wig eliminates the risk of a bad hair day on a wedding day. This is a premium, high-ticket segment with strong referral potential.",
     size: "2M+ weddings annually in the US; every bride is a potential client",
@@ -150,7 +150,7 @@ export const wigAudienceSegments = [
   },
   {
     id: "experimental",
-    icon: "🎨",
+    icon: "palette",
     segment: "Color & Style Experimenters",
     description: "Women who want to try bold colors, dramatic cuts, or fantasy styles without any chemical commitment or damage to their natural hair. This segment is highly active on social media and creates viral content naturally.",
     size: "Rapidly growing with social media influence; Gen Z and Millennial-driven",

@@ -4,6 +4,8 @@
  * Dark charcoal + Gold, Georgia serif, sharp rectangles
  */
 import { useEffect, useState } from "react";
+import { BadgeCheck } from "lucide-react";
+import { BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
 const PHOTOS = {
@@ -161,8 +163,9 @@ export default function Academy() {
                 <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: "24px" }}>{c.desc}</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                   {c.topics.map(t => (
-                    <div key={t} style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", letterSpacing: "1px" }}>
-                      <span style={{ color: "#C9A84C", fontSize: "8px", marginRight: "6px" }}>✦</span>{t}
+                    <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "11px", color: "rgba(255,255,255,0.35)", letterSpacing: "1px" }}>
+                      <BevListCheck size={12} marginTop="1px" />
+                      <span>{t}</span>
                     </div>
                   ))}
                 </div>
@@ -211,7 +214,7 @@ export default function Academy() {
                   "Featured in Nashville hair community since 1994",
                 ].map(c => (
                   <div key={c} className="fade-up instructor-cred" style={{ display: "flex", alignItems: "flex-start", gap: "12px", fontSize: "14px", color: "rgba(255,255,255,0.75)" }}>
-                    <span style={{ color: "#C9A84C", fontSize: "10px", marginTop: "4px", flexShrink: 0 }}>✦</span>
+                    <BevListCheck />
                     {c}
                   </div>
                 ))}
@@ -276,7 +279,9 @@ function AcademyForm() {
   if (submitted) {
     return (
       <div style={{ textAlign: "center", padding: "32px 0" }}>
-        <div style={{ fontSize: "40px", marginBottom: "16px" }}>✦</div>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+          <BadgeCheck size={44} strokeWidth={1.5} color="#C9A84C" aria-hidden />
+        </div>
         <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", color: "#C9A84C", marginBottom: "10px" }}>You're on the list!</div>
         <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
           Check your inbox for the free "5 Color Mistakes" guide. We'll be in touch soon with early access details.

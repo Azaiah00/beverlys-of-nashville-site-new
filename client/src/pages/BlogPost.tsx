@@ -5,6 +5,7 @@
  */
 import { useEffect } from "react";
 import { useParams, Link } from "wouter";
+import { BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
 function useFadeUp() {
@@ -173,7 +174,7 @@ export default function BlogPost() {
               <ul key={i} className="fade-up" style={{ margin: "20px 0 32px", paddingLeft: "0", listStyle: "none" }}>
                 {(block as { type: string; items: string[] }).items?.map((item: string, j: number) => (
                   <li key={j} style={{ display: "flex", gap: "12px", fontSize: "15px", color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: "12px", paddingLeft: "0" }}>
-                    <span style={{ color: "#C9A84C", fontSize: "10px", marginTop: "6px", flexShrink: 0 }}>✦</span>
+                    <BevListCheck marginTop="6px" />
                     {item}
                   </li>
                 ))}

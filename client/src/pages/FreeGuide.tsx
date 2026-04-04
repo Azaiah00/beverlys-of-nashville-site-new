@@ -4,6 +4,8 @@
  * Dark charcoal + Gold, Georgia serif, sharp rectangles
  */
 import { useEffect, useState } from "react";
+import { BadgeCheck } from "lucide-react";
+import { BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
 function useFadeUp() {
@@ -68,7 +70,7 @@ export default function FreeGuide() {
                   "Processing time: why rushing destroys results",
                 ].map(item => (
                   <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "12px", fontSize: "14px", color: "rgba(255,255,255,0.75)" }}>
-                    <span style={{ color: "#C9A84C", fontSize: "10px", marginTop: "4px", flexShrink: 0 }}>✦</span>
+                    <BevListCheck />
                     {item}
                   </div>
                 ))}
@@ -117,7 +119,9 @@ export default function FreeGuide() {
                   </>
                 ) : (
                   <div style={{ textAlign: "center", padding: "24px 0" }}>
-                    <div style={{ fontSize: "48px", marginBottom: "20px" }}>✦</div>
+                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+                      <BadgeCheck size={52} strokeWidth={1.5} color="#C9A84C" aria-hidden />
+                    </div>
                     <h3 style={{ fontFamily: "Georgia, serif", fontSize: "26px", color: "#C9A84C", marginBottom: "12px" }}>Check Your Inbox!</h3>
                     <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, marginBottom: "24px" }}>
                       Your free guide is on its way. You'll also be the first to know when Beverly's Academy launches — with exclusive early-bird pricing.

@@ -42,12 +42,19 @@ export function Nav() {
         display: "flex", alignItems: "center"
       }}>
         <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {/* Logo */}
-          <Link href="/" style={{ textDecoration: "none" }}>
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-              <span style={{ fontFamily: "Georgia, serif", fontSize: "20px", color: "#fff", letterSpacing: "1px" }}>Beverly's</span>
-              <span style={{ fontSize: "8px", letterSpacing: "4px", textTransform: "uppercase", color: "#C9A84C", marginTop: "2px" }}>of Nashville</span>
-            </div>
+          {/* Logo — image from client/public/assets; links home */}
+          <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", lineHeight: 0 }}>
+            <img
+              src="/assets/beverlys-logo.png"
+              alt="Beverly's of Nashville logo"
+              style={{
+                height: "42px",
+                width: "auto",
+                maxWidth: "min(240px, 52vw)",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
           </Link>
 
           {/* Desktop nav links */}
@@ -150,8 +157,19 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div style={{ marginBottom: "16px" }}>
-              <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", color: "#fff", letterSpacing: "1px" }}>Beverly's</div>
-              <div style={{ fontSize: "8px", letterSpacing: "4px", textTransform: "uppercase", color: "#C9A84C", marginTop: "2px" }}>of Nashville</div>
+              <Link href="/" style={{ display: "inline-flex", textDecoration: "none", lineHeight: 0 }}>
+                <img
+                  src="/assets/beverlys-logo.png"
+                  alt="Beverly's of Nashville logo"
+                  style={{
+                    height: "48px",
+                    width: "auto",
+                    maxWidth: "260px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+              </Link>
             </div>
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, maxWidth: "260px", marginBottom: "20px" }}>
               Nashville's premier hair salon. 30+ years of master-level artistry in color, styling, and custom wigs. Led by Teddy Chisom.

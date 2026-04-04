@@ -5,6 +5,22 @@
  * Uses ONLY real uploaded photos + AI-generated images matching salon aesthetic
  */
 import { useEffect, useRef } from "react";
+import type { LucideIcon } from "lucide-react";
+import {
+  BadgeCheck,
+  Briefcase,
+  Crown,
+  Droplets,
+  Flower2,
+  Gem,
+  Leaf,
+  Palette,
+  Ribbon,
+  Scissors,
+  Sparkles,
+  Wind,
+} from "lucide-react";
+import { BevFeatureCheck, BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
 // ── Real photo CDN URLs (uploaded by client) ──────────────────────────────
@@ -140,7 +156,7 @@ export default function Home() {
                   "Trusted by 5,000+ Nashville clients since 1994",
                 ].map(c => (
                   <div key={c} className="credential" style={{ display: "flex", alignItems: "flex-start", gap: "12px", fontSize: "14px", color: "rgba(255,255,255,0.8)" }}>
-                    <span style={{ color: "#C9A84C", fontSize: "10px", marginTop: "4px", flexShrink: 0 }}>✦</span>
+                    <BevListCheck />
                     {c}
                   </div>
                 ))}
@@ -165,44 +181,46 @@ export default function Home() {
           </p>
 
           <div className="services-grid">
-            {[
-              {
-                icon: "◈",
-                name: "Hair Color & Highlights",
-                desc: "From subtle highlights to dramatic transformations. Teddy's color formulation system delivers vibrant, healthy results every time.",
-                items: ["Full Color", "Highlights & Balayage", "Color Correction", "Toning & Glazing"]
-              },
-              {
-                icon: "◈",
-                name: "Silk Press & Blowouts",
-                desc: "Teddy's signature silk press technique — zero heat damage, maximum shine. The smoothest, most natural-looking results in Nashville.",
-                items: ["Silk Press", "Blowout & Style", "Roller Set", "Thermal Styling"]
-              },
-              {
-                icon: "◈",
-                name: "Custom Wigs & Units",
-                desc: "Hand-crafted custom wigs for fashion, protection, and medical needs. Consultations available for all hair types and budgets.",
-                items: ["Lace Front Units", "Full Lace Wigs", "Medical/Cranial Units", "Wig Customization"]
-              },
-              {
-                icon: "◈",
-                name: "Wig Maintenance",
-                desc: "Keep your investment looking flawless. Professional cleaning, conditioning, restyling, and repair for all wig types.",
-                items: ["Deep Cleaning", "Reconditioning", "Restyling", "Lace Repair"]
-              },
-              {
-                icon: "◈",
-                name: "Braids & Protective Styles",
-                desc: "Protective styling that promotes growth and keeps your natural hair healthy. Box braids, knotless, and more.",
-                items: ["Box Braids", "Knotless Braids", "Cornrows", "Faux Locs"]
-              },
-              {
-                icon: "◈",
-                name: "Treatments & Care",
-                desc: "Restore, strengthen, and revitalize your hair with professional-grade treatments tailored to your specific needs.",
-                items: ["Deep Conditioning", "Protein Treatments", "Scalp Treatments", "Keratin Smoothing"]
-              },
-            ].map((s) => (
+            {(
+              [
+                {
+                  Icon: Palette,
+                  name: "Hair Color & Highlights",
+                  desc: "From subtle highlights to dramatic transformations. Teddy's color formulation system delivers vibrant, healthy results every time.",
+                  items: ["Full Color", "Highlights & Balayage", "Color Correction", "Toning & Glazing"],
+                },
+                {
+                  Icon: Wind,
+                  name: "Silk Press & Blowouts",
+                  desc: "Teddy's signature silk press technique — zero heat damage, maximum shine. The smoothest, most natural-looking results in Nashville.",
+                  items: ["Silk Press", "Blowout & Style", "Roller Set", "Thermal Styling"],
+                },
+                {
+                  Icon: Crown,
+                  name: "Custom Wigs & Units",
+                  desc: "Hand-crafted custom wigs for fashion, protection, and medical needs. Consultations available for all hair types and budgets.",
+                  items: ["Lace Front Units", "Full Lace Wigs", "Medical/Cranial Units", "Wig Customization"],
+                },
+                {
+                  Icon: Sparkles,
+                  name: "Wig Maintenance",
+                  desc: "Keep your investment looking flawless. Professional cleaning, conditioning, restyling, and repair for all wig types.",
+                  items: ["Deep Cleaning", "Reconditioning", "Restyling", "Lace Repair"],
+                },
+                {
+                  Icon: Scissors,
+                  name: "Braids & Protective Styles",
+                  desc: "Protective styling that promotes growth and keeps your natural hair healthy. Box braids, knotless, and more.",
+                  items: ["Box Braids", "Knotless Braids", "Cornrows", "Faux Locs"],
+                },
+                {
+                  Icon: Droplets,
+                  name: "Treatments & Care",
+                  desc: "Restore, strengthen, and revitalize your hair with professional-grade treatments tailored to your specific needs.",
+                  items: ["Deep Conditioning", "Protein Treatments", "Scalp Treatments", "Keratin Smoothing"],
+                },
+              ] as { Icon: LucideIcon; name: string; desc: string; items: string[] }[]
+            ).map((s) => (
               <div
                 key={s.name}
                 className="fade-up"
@@ -210,7 +228,20 @@ export default function Home() {
                 onMouseEnter={e => (e.currentTarget.style.background = "#222")}
                 onMouseLeave={e => (e.currentTarget.style.background = "#1a1a1a")}
               >
-                <div style={{ color: "#C9A84C", fontSize: "14px", letterSpacing: "1px", marginBottom: "16px" }}>{s.icon} Service</div>
+                <div
+                  style={{
+                    color: "#C9A84C",
+                    fontSize: "14px",
+                    letterSpacing: "1px",
+                    marginBottom: "16px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <s.Icon size={16} strokeWidth={1.75} color="#C9A84C" aria-hidden />
+                  Service
+                </div>
                 <h3 style={{ fontFamily: "Georgia, serif", fontSize: "20px", marginBottom: "12px" }}>{s.name}</h3>
                 <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: "20px" }}>{s.desc}</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -245,16 +276,18 @@ export default function Home() {
           {/* Who We Serve */}
           <p className="eyebrow fade-up" style={{ marginTop: "40px" }}>Who We Serve</p>
           <div className="wig-cats">
-            {[
-              { icon: "✨", name: "Fashion & Style", desc: "Elevate your look with bold, fashion-forward custom units in any color, length, or texture." },
-              { icon: "🌿", name: "Protective Styling", desc: "Give your natural hair a break while staying flawlessly styled with a custom protective unit." },
-              { icon: "💼", name: "Busy Professionals", desc: "Wake up ready. Low-maintenance custom wigs designed for women on the go." },
-              { icon: "🎗️", name: "Cancer Patients", desc: "Compassionate, private consultations. Insurance reimbursement assistance available. You deserve to feel beautiful." },
-              { icon: "🌸", name: "Alopecia & Hair Loss", desc: "Natural-looking solutions for hormonal, genetic, or stress-related hair loss. Discreet and dignified." },
-              { icon: "💍", name: "Bridal & Events", desc: "Flawless custom units for your wedding day and life's most important moments." },
-              { icon: "🎨", name: "Color Explorers", desc: "Try any color, any length, any style — without commitment or damage to your natural hair." },
-              { icon: "👑", name: "Luxury Seekers", desc: "100% human hair, undetectable lace, premium construction. The finest custom wigs in Nashville." },
-            ].map(c => (
+            {(
+              [
+                { Icon: Sparkles, name: "Fashion & Style", desc: "Elevate your look with bold, fashion-forward custom units in any color, length, or texture." },
+                { Icon: Leaf, name: "Protective Styling", desc: "Give your natural hair a break while staying flawlessly styled with a custom protective unit." },
+                { Icon: Briefcase, name: "Busy Professionals", desc: "Wake up ready. Low-maintenance custom wigs designed for women on the go." },
+                { Icon: Ribbon, name: "Cancer Patients", desc: "Compassionate, private consultations. Insurance reimbursement assistance available. You deserve to feel beautiful." },
+                { Icon: Flower2, name: "Alopecia & Hair Loss", desc: "Natural-looking solutions for hormonal, genetic, or stress-related hair loss. Discreet and dignified." },
+                { Icon: Gem, name: "Bridal & Events", desc: "Flawless custom units for your wedding day and life's most important moments." },
+                { Icon: Palette, name: "Color Explorers", desc: "Try any color, any length, any style — without commitment or damage to your natural hair." },
+                { Icon: Crown, name: "Luxury Seekers", desc: "100% human hair, undetectable lace, premium construction. The finest custom wigs in Nashville." },
+              ] as { Icon: LucideIcon; name: string; desc: string }[]
+            ).map(c => (
               <div
                 key={c.name}
                 className="fade-up"
@@ -262,7 +295,9 @@ export default function Home() {
                 onMouseEnter={e => (e.currentTarget.style.background = "#1e1e1e")}
                 onMouseLeave={e => (e.currentTarget.style.background = "#111")}
               >
-                <div style={{ fontSize: "24px", marginBottom: "12px" }}>{c.icon}</div>
+                <div style={{ marginBottom: "12px", color: "#C9A84C" }}>
+                  <c.Icon size={26} strokeWidth={1.5} aria-hidden />
+                </div>
                 <div style={{ fontFamily: "Georgia, serif", fontSize: "16px", marginBottom: "8px" }}>{c.name}</div>
                 <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>{c.desc}</p>
               </div>
@@ -316,7 +351,7 @@ export default function Home() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   {t.features.map(f => (
                     <div key={f} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: t.featured ? "#111" : "rgba(255,255,255,0.7)" }}>
-                      <span style={{ color: t.featured ? "#111" : "#C9A84C", fontSize: "8px" }}>✦</span>
+                      <BevFeatureCheck featured={t.featured} />
                       {f}
                     </div>
                   ))}
@@ -532,7 +567,9 @@ function WaitlistForm() {
         </button>
       </form>
       <div id="waitlist-success" style={{ display: "none", textAlign: "center", padding: "24px 0" }}>
-        <div style={{ fontSize: "32px", marginBottom: "12px" }}>✦</div>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>
+          <BadgeCheck size={40} strokeWidth={1.5} color="#C9A84C" aria-hidden />
+        </div>
         <div style={{ fontFamily: "Georgia, serif", fontSize: "20px", color: "#C9A84C", marginBottom: "8px" }}>You're on the list!</div>
         <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>Check your inbox for the free "5 Color Mistakes" guide.</p>
       </div>
