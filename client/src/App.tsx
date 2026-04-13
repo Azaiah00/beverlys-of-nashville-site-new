@@ -9,11 +9,13 @@ import Academy from "./pages/Academy";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import FreeGuide from "./pages/FreeGuide";
+import TheReveal from "./pages/TheReveal";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/the-reveal" component={TheReveal} />
       <Route path="/academy" component={Academy} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />

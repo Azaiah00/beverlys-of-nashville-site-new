@@ -38,6 +38,8 @@
 }
 
 :root {
+  /* Nav (70px) + optional promo banner (36px); Layout.tsx updates this when the banner is dismissed. */
+  --site-fixed-header-height: 106px;
   --radius: 0;
   --background: oklch(0.11 0.003 285);
   --foreground: oklch(0.95 0 0);
@@ -97,6 +99,35 @@
     display: block;
     max-width: 100%;
   }
+}
+
+/* ── Scrollbars — charcoal track + gold thumb (matches Beverly's palette; sharp edges) ── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #9a8348 #111111;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.42);
+  border: 2px solid #111111;
+  border-radius: 0;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #c9a84c;
+}
+
+*::-webkit-scrollbar-corner {
+  background: #111111;
 }
 
 /* ── Container ── */
@@ -321,6 +352,15 @@
   align-items: start;
 }
 
+/* Academy page: waitlist columns + shop cards stack on small screens */
+.academy-waitlist-split {
+  grid-template-columns: 1fr 1fr;
+}
+
+.academy-shop-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
 /* ── Hero accent line ── */
 .hero-accent-line {
   position: absolute;
@@ -332,9 +372,64 @@
 }
 
 /* ── Scroll margin for anchor links ── */
-#services, #wigs, #gallery, #about, #contact, #academy, #testimonials,
+#services, #reveal, #wigs, #gallery, #about, #contact, #academy, #testimonials,
 #waitlist, #curriculum, #instructor, #faq {
-  scroll-margin-top: 80px;
+  scroll-margin-top: calc(var(--site-fixed-header-height, 106px) + 12px);
+}
+
+/* Home — The Reveal Session split: image first on small screens */
+.home-reveal-split {
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .home-reveal-split {
+    grid-template-columns: 1fr !important;
+    min-height: unset !important;
+  }
+
+  .home-reveal-split .reveal-visual {
+    order: -1;
+    min-height: 50vw !important;
+    height: 50vw;
+    max-height: 70vh;
+  }
+
+  .home-reveal-split .reveal-copy {
+    padding: 40px 1.25rem 56px !important;
+  }
+}
+
+@media (min-width: 901px) {
+  .home-reveal-split {
+    column-gap: 48px;
+  }
+}
+
+/* The Reveal landing — 3-up cards and add-ons stack on narrow screens */
+.reveal-included-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+}
+
+.reveal-addons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .reveal-included-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .reveal-addons-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -384,6 +479,12 @@
   /* Academy */
   .academy-products {
     grid-template-columns: 1fr;
+  }
+
+  .academy-waitlist-split,
+  .academy-shop-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
   }
 
   /* Curriculum */

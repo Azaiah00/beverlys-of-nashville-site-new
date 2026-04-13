@@ -8,6 +8,18 @@ import { BadgeCheck } from "lucide-react";
 import { BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
+/** Replace when Kit is configured — free PDF opt-in posts to this Kit form. */
+const KIT_FORM_ID_FREEGUIDE = "KIT_FORM_ID_FREEGUIDE";
+
+async function postKitFreeGuideSubscription(payload: Record<string, unknown>) {
+  const url = `https://app.kit.com/forms/${KIT_FORM_ID_FREEGUIDE}/subscriptions`;
+  return fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
 function useFadeUp() {
   useEffect(() => {
     const els = document.querySelectorAll(".fade-up");
@@ -22,7 +34,29 @@ function useFadeUp() {
 
 export default function FreeGuide() {
   useFadeUp();
-  const [submitted, setSubmitted] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleGuideSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formStatus === "loading") return;
+    setFormStatus("loading");
+    try {
+      const res = await postKitFreeGuideSubscription({
+        first_name: firstName.trim(),
+        email_address: email.trim(),
+        tags: "free-guide",
+      });
+      if (res.ok) {
+        setFormStatus("success");
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  };
 
   return (
     <div style={{ background: "#1a1a1a", color: "#fff", minHeight: "100vh" }}>
@@ -44,7 +78,7 @@ export default function FreeGuide() {
         }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(17,17,17,0.92) 55%, rgba(17,17,17,0.5))" }} />
 
-        <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "70px" }}>
+        <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "var(--site-fixed-header-height, 106px)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }}>
             {/* Left: Copy */}
             <div>
@@ -83,34 +117,43 @@ export default function FreeGuide() {
             {/* Right: Form */}
             <div className="fade-up">
               <div style={{ background: "#111", border: "1px solid rgba(201,168,76,0.25)", padding: "48px 40px" }}>
-                {!submitted ? (
+                {formStatus !== "success" ? (
                   <>
                     <h3 style={{ fontFamily: "Georgia, serif", fontSize: "24px", marginBottom: "8px" }}>Get the Free Guide</h3>
                     <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: "32px" }}>
-                      Enter your details below and we'll send the PDF guide to your inbox instantly — plus early access to Beverly's Academy when it launches.
+                      Enter your details below and we&apos;ll send the PDF guide to your inbox instantly — plus early access to Beverly&apos;s Academy when it launches.
                     </p>
-                    <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                    <form onSubmit={handleGuideSubmit}>
+                      <input type="hidden" name="tags" value="free-guide" />
                       <div style={{ marginBottom: "20px" }}>
                         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>First Name</label>
-                        <input type="text" required placeholder="Your first name" style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.2)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit", boxSizing: "border-box" }} />
-                      </div>
-                      <div style={{ marginBottom: "20px" }}>
-                        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Email Address</label>
-                        <input type="email" required placeholder="your@email.com" style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.2)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit", boxSizing: "border-box" }} />
+                        <input
+                          type="text"
+                          name="first_name"
+                          required
+                          placeholder="Your first name"
+                          value={firstName}
+                          onChange={e => setFirstName(e.target.value)}
+                          style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.2)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit", boxSizing: "border-box", borderRadius: 0 }}
+                        />
                       </div>
                       <div style={{ marginBottom: "28px" }}>
-                        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>I Am A...</label>
-                        <select required defaultValue="" style={{ width: "100%", padding: "14px 16px", background: "#0a0a0a", border: "1px solid rgba(201,168,76,0.2)", color: "#fff", fontSize: "14px", outline: "none", cursor: "pointer", appearance: "none", fontFamily: "inherit", boxSizing: "border-box" }}>
-                          <option value="" disabled>Select your role</option>
-                          <option value="student">Cosmetology Student</option>
-                          <option value="new">New Stylist (0–3 years)</option>
-                          <option value="experienced">Experienced Stylist (3+ years)</option>
-                          <option value="owner">Salon Owner</option>
-                          <option value="enthusiast">Hair Enthusiast / DIY</option>
-                        </select>
+                        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Email Address</label>
+                        <input
+                          type="email"
+                          name="email_address"
+                          required
+                          placeholder="your@email.com"
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
+                          style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.2)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit", boxSizing: "border-box", borderRadius: 0 }}
+                        />
                       </div>
-                      <button type="submit" className="btn-gold" style={{ width: "100%", padding: "16px", fontSize: "11px" }}>
-                        Send Me the Free Guide →
+                      {formStatus === "error" && (
+                        <p style={{ fontSize: "13px", color: "#e88", marginBottom: "16px" }}>Something went wrong. Please try again shortly.</p>
+                      )}
+                      <button type="submit" className="btn-gold" disabled={formStatus === "loading"} style={{ width: "100%", padding: "16px", fontSize: "11px" }}>
+                        {formStatus === "loading" ? "Sending…" : "Send Me the Free Guide →"}
                       </button>
                       <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", textAlign: "center", marginTop: "16px", lineHeight: 1.5 }}>
                         No spam. Unsubscribe anytime. Guide arrives instantly.
@@ -122,9 +165,9 @@ export default function FreeGuide() {
                     <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
                       <BadgeCheck size={52} strokeWidth={1.5} color="#C9A84C" aria-hidden />
                     </div>
-                    <h3 style={{ fontFamily: "Georgia, serif", fontSize: "26px", color: "#C9A84C", marginBottom: "12px" }}>Check Your Inbox!</h3>
+                    <h3 style={{ fontFamily: "Georgia, serif", fontSize: "26px", color: "#C9A84C", marginBottom: "12px" }}>Thank you!</h3>
                     <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, marginBottom: "24px" }}>
-                      Your free guide is on its way. You'll also be the first to know when Beverly's Academy launches — with exclusive early-bird pricing.
+                      Your free guide is on its way! Check your inbox.
                     </p>
                     <a href="/academy" className="btn-gold" style={{ display: "inline-block" }}>Explore The Academy →</a>
                   </div>
@@ -166,9 +209,9 @@ export default function FreeGuide() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "80px", alignItems: "center", maxWidth: "900px" }}>
             <div className="fade-up">
               <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddyinsalon2_5fc523b8.jpg"
-                alt="Teddy Chisom"
-                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "top", border: "1px solid rgba(201,168,76,0.2)" }}
+                src="/assets/teddy-chisom-profile.png"
+                alt="Teddy Chisom — Beverly's of Nashville"
+                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 20%", border: "1px solid rgba(201,168,76,0.2)" }}
               />
             </div>
             <div>

@@ -4,7 +4,8 @@
  * Dark charcoal #1A1A1A + Gold #C9A84C, Georgia serif, sharp rectangles
  * Uses ONLY real uploaded photos + AI-generated images matching salon aesthetic
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   BadgeCheck,
@@ -23,24 +24,20 @@ import {
 import { BevFeatureCheck, BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
+/** Replace when Kit is configured — home waitlist posts to this Kit form. */
+const KIT_FORM_ID_WAITLIST = "KIT_FORM_ID_WAITLIST";
+/** Placeholder checkout / product URLs for Academy teaser buttons. */
+const EBOOK_URL_1 = "EBOOK_URL_1";
+const EBOOK_URL_2 = "EBOOK_URL_2";
+const COURSE_URL_1 = "COURSE_URL_1";
+
 // ── Real photo CDN URLs (uploaded by client) ──────────────────────────────
 const PHOTOS = {
-  teddyHero:    "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddy-in-salon_3b149114.jpg",
-  teddySalon2:  "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddyinsalon2_5fc523b8.jpg",
-  teddySalon3:  "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddyinsalon3_4a47c75a.jpg",
-  interior:     "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/saloninterior-1_24b3a8a4.jpg",
-  gallery1:     "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/hairgallery_c3886879.jpg",
-  gallery2:     "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/hairgallerybluebuzz_6874d450.jpeg",
-  fb1:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/86790898_100198144919002_4841327315470254080_n_f5a19046.jpg",
-  fb2:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/488466365_1220721643388128_2928759630973482530_n_1eec219c.jpg",
-  fb3:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/489114787_1224555033004789_7003720473379721468_n_4e76f7f4.jpg",
-  fb4:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/489669394_1224555093004783_1491903556562294114_n_62ef1f40.jpg",
-  fb5:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/489914605_1224555289671430_5797016941782362400_n_45699ac1.jpg",
-  fb6:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/490416405_1227912196002406_9031811210377746322_n_816343db.jpg",
-  fb7:          "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/473420572_1108225034116303_531114487233909498_n_b5181a9e.jpg",
-  // AI-generated matching salon aesthetic
-  wigConsult:   "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/wig-consultation_ded7bfc7.jpg",
-  colorWork:    "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/color-work_c073b08e.jpg",
+  teddyHero: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddy-in-salon_3b149114.jpg",
+  /** Home About — “The Artist Behind the Chair” (studio portrait with Beverly's branding). */
+  teddyAbout: "/assets/teddy-artist-behind-chair.png",
+  /** The Reveal Session — right-column hero (Teddy styling client, salon + logo). */
+  revealSessionSalon: "/assets/reveal-session-salon.png",
 };
 
 // ── Fade-up hook ──────────────────────────────────────────────────────────
@@ -80,7 +77,7 @@ export default function Home() {
         }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(17,17,17,0.85) 50%, rgba(17,17,17,0.3))" }} />
 
-        <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "70px" }}>
+        <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "var(--site-fixed-header-height, 106px)" }}>
           <p className="hero-eyebrow fade-up" style={{ fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "20px" }}>
             Nashville's Premier Hair Salon — Est. 1994
           </p>
@@ -122,9 +119,9 @@ export default function Home() {
             {/* Image */}
             <div className="fade-up" style={{ position: "relative" }}>
               <img
-                src={PHOTOS.teddySalon2}
+                src={PHOTOS.teddyAbout}
                 alt="Teddy Chisom — Master Stylist at Beverly's of Nashville"
-                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "top" }}
+                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 20%" }}
               />
               <div style={{
                 position: "absolute", bottom: "-20px", right: "-20px",
@@ -263,6 +260,100 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ══ THE REVEAL SESSION ═════════════════════════════════════════════════ */}
+      <section id="reveal" style={{ background: "#0D0D0D", position: "relative" }}>
+        <div style={{ height: "3px", background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} aria-hidden />
+        <div
+          className="home-reveal-split"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "minmax(0, 55fr) minmax(0, 45fr)",
+            alignItems: "stretch",
+            minHeight: "min(640px, 92vh)",
+            maxWidth: "1400px",
+            margin: "0 auto",
+            padding: "0 1.25rem",
+          }}
+        >
+          <div className="reveal-copy fade-up" style={{ padding: "clamp(48px, 8vw, 96px) clamp(20px, 4vw, 56px) clamp(48px, 8vw, 96px) 0", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <p style={{ fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "20px" }}>INTRODUCING</p>
+            <h2 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 400, lineHeight: 1.08, color: "#fff", marginBottom: "20px" }}>
+              The Reveal Session.
+            </h2>
+            <div style={{ width: "48px", height: "2px", background: "#C9A84C", marginBottom: "24px" }} aria-hidden />
+            <p style={{ fontSize: "18px", lineHeight: 1.7, color: "#fff", maxWidth: "480px", marginBottom: "20px" }}>
+              Hair. Makeup. Photos. All in one appointment — at Beverly&apos;s of Nashville.
+            </p>
+            <p style={{ fontSize: "14px", lineHeight: 1.75, color: "rgba(255,255,255,0.65)", maxWidth: "520px", marginBottom: "32px" }}>
+              Teddy styles your hair. Our makeup artist perfects your look. Then our in-salon photographer captures it all in Beverly&apos;s stunning studio space. You leave with 10 professionally edited photos and the best version of yourself.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "stretch", gap: "0", marginBottom: "32px", maxWidth: "520px" }}>
+              {[
+                { label: "Hair Style", value: "Signature styling" },
+                { label: "Full Glam Makeup", value: "Pro application" },
+                { label: "10 Edited Photos", value: "Edited & delivered" },
+              ].map((item, i) => (
+                <div key={item.label} style={{ display: "flex", alignItems: "stretch" }}>
+                  {i > 0 && (
+                    <div style={{ width: "1px", background: "rgba(201,168,76,0.25)", margin: "0 20px", flexShrink: 0 }} aria-hidden />
+                  )}
+                  <div style={{ flex: "1 1 100px", minWidth: "0" }}>
+                    <div style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "8px" }}>{item.label}</div>
+                    <div style={{ fontSize: "15px", color: "#fff", fontWeight: 500 }}>{item.value}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "16px 24px", marginBottom: "28px" }}>
+              <span style={{ fontFamily: "Georgia, serif", fontSize: "52px", color: "#C9A84C", lineHeight: 1 }}>$375</span>
+              <span style={{ fontSize: "15px", color: "rgba(255,255,255,0.4)", textDecoration: "line-through" }}>$550+ value</span>
+            </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginBottom: "16px" }}>
+              <a
+                href="mailto:teddy@beverlysofnashville.com?subject=The%20Reveal%20Session%20Booking"
+                className="btn-gold"
+              >
+                Book The Reveal →
+              </a>
+              <a href="/the-reveal" className="btn-outline">
+                Learn More
+              </a>
+            </div>
+            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", margin: 0 }}>
+              Limited availability — by appointment only
+            </p>
+          </div>
+          <div
+            className="reveal-visual fade-up"
+            style={{
+              position: "relative",
+              minHeight: "280px",
+              backgroundImage: `linear-gradient(to right, rgba(13,13,13,0.88) 0%, rgba(13,13,13,0.2) 38%, transparent 55%), url(${PHOTOS.revealSessionSalon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: "20px",
+                right: "20px",
+                background: "#C9A84C",
+                color: "#111",
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "3px",
+                textTransform: "uppercase",
+                padding: "8px 16px",
+                borderRadius: 0,
+              }}
+            >
+              NEW SERVICE
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ══ WIGS ══════════════════════════════════════════════════════════════ */}
       <section id="wigs" className="bev-section" style={{ background: "#1a1a1a" }}>
         <div className="container">
@@ -377,22 +468,26 @@ export default function Home() {
           <h2 className="section-title fade-up" style={{ textAlign: "center" }}>Hair Gallery</h2>
           <p className="fade-up" style={{ color: "rgba(255,255,255,0.6)", textAlign: "center", marginTop: "10px", fontSize: "14px" }}>Every transformation tells a story.</p>
 
-          <div className="gallery-grid">
-            {[
-              { src: PHOTOS.fb4, alt: "Hair transformation by Teddy Chisom" },
-              { src: PHOTOS.fb5, alt: "Custom color work at Beverly's of Nashville" },
-              { src: PHOTOS.fb6, alt: "Styling at Beverly's of Nashville" },
-              { src: PHOTOS.gallery1, alt: "Hair gallery — Beverly's of Nashville" },
-              { src: PHOTOS.gallery2, alt: "Blue buzz cut — Beverly's of Nashville" },
-              { src: PHOTOS.fb2, alt: "Color transformation — Beverly's of Nashville" },
-              { src: PHOTOS.fb3, alt: "Salon work by Teddy Chisom" },
-              { src: PHOTOS.fb7, alt: "Hair artistry at Beverly's of Nashville" },
-              { src: PHOTOS.fb1, alt: "Beverly's of Nashville hair work" },
-            ].map((img, i) => (
-              <div key={i} className="gallery-item fade-up">
-                <img src={img.src} alt={img.alt} loading="lazy" />
-              </div>
-            ))}
+          <div
+            className="fade-up"
+            style={{
+              marginTop: "48px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              maxWidth: "640px",
+              border: "1px solid rgba(201,168,76,0.28)",
+              background: "#0a0a0a",
+              padding: "72px 32px",
+              textAlign: "center",
+            }}
+          >
+            <div style={{ fontSize: "10px", letterSpacing: "4px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Hair Gallery</div>
+            <h3 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 400, color: "#fff", marginBottom: "16px", lineHeight: 1.15 }}>
+              Coming Soon
+            </h3>
+            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, margin: 0 }}>
+              We&apos;re refreshing the gallery with new work. Follow @beverlysofnashville on Instagram for the latest transformations in the meantime.
+            </p>
           </div>
 
           <div className="fade-up" style={{ textAlign: "center", marginTop: "40px" }}>
@@ -416,16 +511,36 @@ export default function Home() {
             Teddy Chisom's 30+ years of expertise is now available to aspiring and seasoned stylists nationwide. The Beverly's Academy offers e-books, online courses, webinars, and in-person masterclasses covering everything from color theory to building a six-figure salon business.
           </p>
 
-          <div style={{ display: "inline-block", background: "#C9A84C", color: "#111", fontSize: "9px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", padding: "6px 16px", marginBottom: "32px" }}>
-            Coming Soon
-          </div>
-
           <div className="academy-products">
             {[
-              { type: "E-Book", name: "Hair Color Mastery Guide", desc: "Teddy's complete color formulation system — from theory to application. Used by professional stylists across Nashville.", price: "$49" },
-              { type: "Online Course", name: "Wig Construction Masterclass", desc: "Step-by-step video course covering lace front construction, customization, and client consultation.", price: "$199" },
-              { type: "E-Book", name: "The Silk Press Blueprint", desc: "The exact technique Teddy has perfected over 30 years. Zero heat damage, maximum results.", price: "$29" },
-              { type: "Webinar Series", name: "Salon Business Bootcamp", desc: "How to build and sustain a profitable salon business — pricing, hiring, retention, and marketing from 30+ years of experience.", price: "$49 / session" },
+              {
+                type: "E-Book",
+                name: "Hair Color Mastery Guide",
+                desc: "Teddy's complete color formulation system — from theory to application. Used by professional stylists across Nashville.",
+                price: "$49",
+                cta: { href: EBOOK_URL_1, label: "Buy Now" },
+              },
+              {
+                type: "Online Course",
+                name: "Wig Construction Masterclass",
+                desc: "Step-by-step video course covering lace front construction, customization, and client consultation.",
+                price: "$199",
+                cta: { href: COURSE_URL_1, label: "Enroll →" },
+              },
+              {
+                type: "E-Book",
+                name: "The Silk Press Blueprint",
+                desc: "The exact technique Teddy has perfected over 30 years. Zero heat damage, maximum results.",
+                price: "$29",
+                cta: { href: EBOOK_URL_2, label: "Buy Now" },
+              },
+              {
+                type: "Webinar Series",
+                name: "Salon Business Bootcamp",
+                desc: "How to build and sustain a profitable salon business — pricing, hiring, retention, and marketing from 30+ years of experience.",
+                price: "$49 / session",
+                cta: { href: "#waitlist", label: "Join Waitlist →" },
+              },
             ].map(p => (
               <div
                 key={p.name}
@@ -437,7 +552,8 @@ export default function Home() {
                 <div style={{ fontSize: "9px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "12px" }}>{p.type}</div>
                 <h3 style={{ fontFamily: "Georgia, serif", fontSize: "20px", marginBottom: "12px" }}>{p.name}</h3>
                 <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: "20px" }}>{p.desc}</p>
-                <div style={{ fontFamily: "Georgia, serif", fontSize: "24px", color: "#C9A84C" }}>{p.price}</div>
+                <div style={{ fontFamily: "Georgia, serif", fontSize: "24px", color: "#C9A84C", marginBottom: "16px" }}>{p.price}</div>
+                <a href={p.cta.href} className="btn-gold" style={{ display: "inline-block", fontSize: "10px", padding: "12px 20px" }}>{p.cta.label}</a>
               </div>
             ))}
           </div>
@@ -452,7 +568,7 @@ export default function Home() {
           </div>
 
           <div className="fade-up" style={{ marginTop: "32px" }}>
-            <a href="/academy" className="btn-gold">Explore The Academy →</a>
+            <a href="/academy" className="btn-gold">Visit The Academy Shop →</a>
           </div>
         </div>
       </section>
@@ -509,8 +625,13 @@ export default function Home() {
                 </a>
                 <a href="tel:6154974215" className="btn-outline">Call or Text</a>
               </div>
-              <div className="fade-up" style={{ background: "#111", border: "1px solid rgba(201,168,76,0.15)", padding: "16px 20px", fontSize: "13px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>
+              <div className="fade-up" style={{ background: "#111", border: "1px solid rgba(201,168,76,0.15)", padding: "16px 20px", fontSize: "13px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: "40px" }}>
                 Beverly's of Nashville Salon is led by Teddy Chisom. For salon appointments, please use the salon number: (615) 497-4215. Walk-ins welcome based on availability.
+              </div>
+
+              <div className="fade-up">
+                <div style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>Send a Message</div>
+                <ContactForm />
               </div>
             </div>
             <div className="fade-up">
@@ -535,44 +656,213 @@ export default function Home() {
   );
 }
 
-// ── Waitlist Form Component ───────────────────────────────────────────────
-function WaitlistForm() {
-  const formRef = useRef<HTMLFormElement>(null);
+// ── Kit (ConvertKit) public form POST — swap KIT_FORM_ID_* when forms are live. ──
+async function postKitSubscription(formId: string, payload: Record<string, unknown>) {
+  const url = `https://app.kit.com/forms/${formId}/subscriptions`;
+  return fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+const inputStyle: CSSProperties = {
+  width: "100%",
+  padding: "14px 16px",
+  background: "rgba(255,255,255,0.05)",
+  border: "1px solid rgba(201,168,76,0.25)",
+  color: "#fff",
+  fontSize: "14px",
+  outline: "none",
+  borderRadius: 0,
+  fontFamily: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
+  boxSizing: "border-box",
+};
+
+// ── Netlify contact form (registered via static form in index.html + this UI). ──
+function ContactForm() {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = formRef.current;
-    if (!form) return;
-    form.style.display = "none";
-    const success = document.getElementById("waitlist-success");
-    if (success) success.style.display = "block";
+    if (status === "submitting") return;
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const name = String(fd.get("name") ?? "").trim();
+    const email = String(fd.get("email") ?? "").trim();
+    const message = String(fd.get("message") ?? "").trim();
+    const botField = String(fd.get("bot-field") ?? "").trim();
+    if (botField) return;
+
+    const body = new URLSearchParams();
+    body.append("form-name", "contact");
+    body.append("name", name);
+    body.append("email", email);
+    body.append("message", message);
+
+    setStatus("submitting");
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
-  return (
-    <>
-      <form ref={formRef} onSubmit={handleSubmit} style={{ display: "flex", gap: "0" }}>
-        <input
-          type="email"
-          required
-          placeholder="Your email address"
-          style={{
-            flex: 1, padding: "14px 16px",
-            background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.25)",
-            borderRight: "none", color: "#fff", fontSize: "14px", outline: "none",
-            fontFamily: "Helvetica Neue, Arial, sans-serif"
-          }}
-        />
-        <button type="submit" className="btn-gold" style={{ whiteSpace: "nowrap" }}>
-          Join Waitlist
-        </button>
-      </form>
-      <div id="waitlist-success" style={{ display: "none", textAlign: "center", padding: "24px 0" }}>
+  if (status === "success") {
+    return (
+      <div style={{ background: "#111", border: "1px solid rgba(201,168,76,0.25)", padding: "32px 28px", textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>
           <BadgeCheck size={40} strokeWidth={1.5} color="#C9A84C" aria-hidden />
         </div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: "20px", color: "#C9A84C", marginBottom: "8px" }}>You're on the list!</div>
-        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>Check your inbox for the free "5 Color Mistakes" guide.</p>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: "20px", color: "#C9A84C", marginBottom: "8px" }}>Message received</div>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>Thank you — we&apos;ll get back to you as soon as possible.</p>
       </div>
+    );
+  }
+
+  return (
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      style={{ position: "relative", background: "#111", border: "1px solid rgba(201,168,76,0.2)", padding: "28px 24px" }}
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", overflow: "hidden" }} aria-hidden="true">
+        <label>
+          Do not fill this in:
+          <input name="bot-field" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+      </p>
+      <div style={{ marginBottom: "16px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Name</label>
+        <input name="name" type="text" required placeholder="Your name" style={inputStyle} />
+      </div>
+      <div style={{ marginBottom: "16px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Email</label>
+        <input name="email" type="email" required placeholder="your@email.com" style={inputStyle} />
+      </div>
+      <div style={{ marginBottom: "20px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Message</label>
+        <textarea name="message" required rows={4} placeholder="How can we help?" style={{ ...inputStyle, resize: "vertical", minHeight: "100px" }} />
+      </div>
+      {status === "error" && (
+        <p style={{ fontSize: "13px", color: "#e88", marginBottom: "12px" }}>Something went wrong. Please call the salon or try again shortly.</p>
+      )}
+      <button type="submit" className="btn-gold" disabled={status === "submitting"} style={{ width: "100%", padding: "14px", fontSize: "11px" }}>
+        {status === "submitting" ? "Sending…" : "Send Message"}
+      </button>
+    </form>
+  );
+}
+
+// ── Waitlist Form Component ───────────────────────────────────────────────
+function WaitlistForm() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === "loading") return;
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const first_name = String(fd.get("first_name") ?? "").trim();
+    const email_address = String(fd.get("email_address") ?? "").trim();
+
+    setStatus("loading");
+    try {
+      const res = await postKitSubscription(KIT_FORM_ID_WAITLIST, {
+        first_name,
+        email_address,
+        tags: "academy-waitlist",
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <>
+        <div style={{ textAlign: "center", padding: "24px 0" }}>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>
+            <BadgeCheck size={40} strokeWidth={1.5} color="#C9A84C" aria-hidden />
+          </div>
+          <div style={{ fontFamily: "Georgia, serif", fontSize: "20px", color: "#C9A84C", marginBottom: "8px" }}>You&apos;re on the list!</div>
+          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>Check your inbox for the free &quot;5 Color Mistakes&quot; guide.</p>
+        </div>
+        <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "12px" }}>No spam, ever. Unsubscribe anytime.</p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        {/* Kit receives tags in the JSON body below; this hidden field documents the tag for non-JS builds. */}
+        <input type="hidden" name="tags" value="academy-waitlist" />
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0" }}>
+          <input
+            name="first_name"
+            type="text"
+            required
+            placeholder="First name"
+            style={{
+              flex: "1 1 140px",
+              padding: "14px 16px",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(201,168,76,0.25)",
+              borderBottom: "1px solid rgba(201,168,76,0.25)",
+              color: "#fff",
+              fontSize: "14px",
+              outline: "none",
+              borderRadius: 0,
+              fontFamily: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
+            }}
+          />
+          <input
+            name="email_address"
+            type="email"
+            required
+            placeholder="Your email address"
+            style={{
+              flex: "2 1 200px",
+              padding: "14px 16px",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(201,168,76,0.25)",
+              borderLeft: "none",
+              color: "#fff",
+              fontSize: "14px",
+              outline: "none",
+              borderRadius: 0,
+              fontFamily: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
+            }}
+          />
+        </div>
+        {status === "error" && (
+          <p style={{ fontSize: "12px", color: "#e88", margin: 0 }}>Could not join right now. Please try again or use the full form on the Academy page.</p>
+        )}
+        <button type="submit" className="btn-gold" disabled={status === "loading"} style={{ alignSelf: "flex-start", whiteSpace: "nowrap" }}>
+          {status === "loading" ? "Joining…" : "Join Waitlist"}
+        </button>
+      </form>
       <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginTop: "12px" }}>No spam, ever. Unsubscribe anytime.</p>
     </>
   );

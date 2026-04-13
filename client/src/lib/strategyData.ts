@@ -255,8 +255,9 @@ export const academyLadder = [
     step: 5,
     title: "Elite Private Mentorship",
     price: "$3,000+",
-    description: "A three-month, one-on-one virtual coaching program for salon owners looking to scale their own businesses.",
-    tag: "Premium",
+    description:
+      "A three-month, one-on-one virtual coaching program for salon owners looking to scale their own businesses. Direct access to Teddy — his pricing strategy, client retention system, and 30+ years of business wisdom.",
+    tag: "By Application Only",
   },
 ];
 

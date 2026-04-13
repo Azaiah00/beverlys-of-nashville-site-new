@@ -4,12 +4,21 @@
  * Dark charcoal + Gold, Georgia serif, sharp rectangles
  */
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { BadgeCheck } from "lucide-react";
 import { BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
+/** Replace when Kit is configured — Academy waitlist (includes stylist role). */
+const KIT_FORM_ID_ACADEMY_WAITLIST = "KIT_FORM_ID_ACADEMY_WAITLIST";
+/** Placeholder product URLs — swap for real checkout links. */
+const EBOOK_URL_1 = "EBOOK_URL_1";
+const EBOOK_URL_2 = "EBOOK_URL_2";
+const COURSE_URL_1 = "COURSE_URL_1";
+
 const PHOTOS = {
-  teddySalon3: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddyinsalon3_4a47c75a.jpg",
+  /** “Your Instructor” — Teddy teaching in the salon (laptop / class context). */
+  teddyInstructor: "/assets/teddy-academy-instructor.png",
   academyBanner: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/academy-banner_5d97ab00.jpg",
 };
 
@@ -48,10 +57,7 @@ export default function Academy() {
         }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(17,17,17,0.9) 55%, rgba(17,17,17,0.4))" }} />
 
-        <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "70px", maxWidth: "760px" }}>
-          <div style={{ display: "inline-block", background: "#C9A84C", color: "#111", fontSize: "9px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", padding: "6px 16px", marginBottom: "28px" }}>
-            Coming Soon
-          </div>
+        <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: "var(--site-fixed-header-height, 106px)", maxWidth: "760px" }}>
           <p className="fade-up" style={{ fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "16px" }}>
             Hair Education Platform
           </p>
@@ -75,7 +81,7 @@ export default function Academy() {
       {/* ── Waitlist Section ── */}
       <section id="waitlist" className="bev-section" style={{ background: "#111" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
+          <div className="academy-waitlist-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
             {/* Form */}
             <div className="fade-up" style={{ background: "#1a1a1a", border: "1px solid rgba(201,168,76,0.2)", padding: "48px 40px" }}>
               <h2 style={{ fontFamily: "Georgia, serif", fontSize: "26px", marginBottom: "8px" }}>Join the Academy Waitlist</h2>
@@ -106,68 +112,192 @@ export default function Academy() {
         </div>
       </section>
 
-      {/* ── Curriculum ── */}
+      {/* ── Shop + Curriculum ladder ── */}
       <section id="curriculum" className="bev-section" style={{ background: "#1a1a1a" }}>
         <div className="container">
-          <p className="eyebrow fade-up">What You'll Learn</p>
-          <h2 className="section-title fade-up">The Curriculum</h2>
+          <p className="eyebrow fade-up">Digital Products</p>
+          <h2 className="section-title fade-up">Shop</h2>
           <div className="hr-gold fade-up" />
-          <div className="curriculum-grid">
+          <p className="fade-up" style={{ fontSize: "15px", color: "rgba(255,255,255,0.55)", maxWidth: "640px", lineHeight: 1.7, marginBottom: "40px" }}>
+            Instant-download e-books written from 30+ years behind the chair — foundational guides you can use tonight.
+          </p>
+
+          <div className="academy-shop-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", marginBottom: "72px" }}>
             {[
               {
-                type: "E-Book",
-                name: "Hair Color Mastery Guide",
-                desc: "Teddy's complete color formulation system — from theory to application. Used by professional stylists across Nashville.",
-                topics: ["Color theory & the wheel", "Formulation for all skin tones", "Corrective color techniques", "Client consultation scripts"]
+                cover: "/assets/cover-color-guide.jpg",
+                title: "Hair Color Mastery Guide",
+                desc: "Teddy's full color formulation system — theory through application for working stylists.",
+                price: "$49",
+                href: EBOOK_URL_1,
               },
               {
-                type: "Online Course",
-                name: "Wig Construction Masterclass",
-                desc: "Step-by-step video course covering lace front construction, customization, and client consultation for all wig types.",
-                topics: ["Lace front vs. full lace", "Measuring & fitting clients", "Customization techniques", "Medical wig consultations"]
+                cover: "/assets/cover-silk-press.jpg",
+                title: "The Silk Press Blueprint",
+                desc: "Heat discipline, sectioning, and finishing — the exact silk press system Beverly's is known for.",
+                price: "$29",
+                href: EBOOK_URL_2,
               },
-              {
-                type: "E-Book",
-                name: "The Silk Press Blueprint",
-                desc: "The exact technique Teddy has perfected over 30 years. Zero heat damage, maximum results every single time.",
-                topics: ["Heat protection protocols", "Sectioning & tension control", "Finishing & longevity tips", "Client aftercare instructions"]
-              },
-              {
-                type: "Webinar Series",
-                name: "Salon Business Bootcamp",
-                desc: "How to build and sustain a profitable salon business — pricing, hiring, retention, and marketing from 30+ years of experience.",
-                topics: ["Pricing your services profitably", "Building a loyal clientele", "Hiring & managing stylists", "Social media & content strategy"]
-              },
-              {
-                type: "Masterclass",
-                name: "Advanced Color Correction",
-                desc: "Deep-dive into the most challenging color scenarios. Fix disasters, manage client expectations, and charge premium rates.",
-                topics: ["Bleach & tone systems", "Fixing box dye disasters", "Documenting your process", "Pricing corrections fairly"]
-              },
-              {
-                type: "Workshop",
-                name: "In-Person Nashville Intensive",
-                desc: "A full-day hands-on workshop at Beverly's of Nashville. Limited seats. Work directly with Teddy on live models.",
-                topics: ["Live model color work", "Wig construction demo", "Business Q&A with Teddy", "Certificate of completion"]
-              },
-            ].map(c => (
+            ].map((book) => (
               <div
-                key={c.name}
+                key={book.title}
                 className="fade-up"
-                style={{ background: "#111", padding: "36px 28px", borderBottom: "3px solid transparent", transition: "border-color 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.borderBottomColor = "#C9A84C")}
-                onMouseLeave={e => (e.currentTarget.style.borderBottomColor = "transparent")}
+                style={{ background: "#111", border: "1px solid rgba(201,168,76,0.2)", padding: "0", display: "flex", flexDirection: "column", borderRadius: 0 }}
               >
-                <div style={{ fontSize: "9px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "12px" }}>{c.type}</div>
-                <h3 style={{ fontFamily: "Georgia, serif", fontSize: "20px", marginBottom: "12px", lineHeight: 1.2 }}>{c.name}</h3>
-                <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: "24px" }}>{c.desc}</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                  {c.topics.map(t => (
-                    <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "11px", color: "rgba(255,255,255,0.35)", letterSpacing: "1px" }}>
-                      <BevListCheck size={12} marginTop="1px" />
-                      <span>{t}</span>
+                <div style={{ position: "relative" }}>
+                  <img src={book.cover} alt="" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", borderBottom: "1px solid rgba(201,168,76,0.2)" }} loading="lazy" />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "12px",
+                      left: "12px",
+                      background: "rgba(17,17,17,0.92)",
+                      color: "#C9A84C",
+                      fontSize: "9px",
+                      letterSpacing: "2px",
+                      textTransform: "uppercase",
+                      padding: "6px 12px",
+                      border: "1px solid rgba(201,168,76,0.5)",
+                      borderRadius: 0,
+                    }}
+                  >
+                    Instant Download
+                  </div>
+                </div>
+                <div style={{ padding: "28px 24px 32px", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <h3 style={{ fontFamily: "Georgia, serif", fontSize: "22px", marginBottom: "12px", lineHeight: 1.2 }}>{book.title}</h3>
+                  <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: "20px", flex: 1 }}>{book.desc}</p>
+                  <div style={{ fontFamily: "Georgia, serif", fontSize: "26px", color: "#C9A84C", marginBottom: "20px" }}>{book.price}</div>
+                  <a href={book.href} className="btn-gold" style={{ display: "inline-block", textAlign: "center", width: "100%", boxSizing: "border-box" }}>
+                    Buy Now
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="eyebrow fade-up">Your Path</p>
+          <h2 className="section-title fade-up">The Curriculum</h2>
+          <div className="hr-gold fade-up" />
+          <p className="fade-up" style={{ fontSize: "15px", color: "rgba(255,255,255,0.55)", maxWidth: "640px", lineHeight: 1.7, marginBottom: "40px" }}>
+            Start free, then climb from digital guides to private mentorship — every step designed for working beauty professionals.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0", marginTop: "24px" }}>
+            {[
+              {
+                num: "01",
+                bg: "#111",
+                band: "Free",
+                type: "Lead Magnet",
+                name: "The Master Colorist's Cheat Sheet",
+                detail: "PDF guide, instant download",
+                price: "",
+                ctas: [{ label: "Download Free Guide →", href: "/free-guide", variant: "gold" as const }],
+              },
+              {
+                num: "02",
+                bg: "#1a1a1a",
+                band: "$29–$79",
+                type: "E-Books",
+                name: "Hair Color Mastery Guide ($49) & The Silk Press Blueprint ($29)",
+                detail: "Foundational expert guides",
+                price: "",
+                ctas: [
+                  { label: "Buy Now — $49", href: EBOOK_URL_1, variant: "gold" as const },
+                  { label: "Buy Now — $29", href: EBOOK_URL_2, variant: "outline" as const },
+                ],
+              },
+              {
+                num: "03",
+                bg: "#111",
+                band: "$197–$497",
+                type: "Video Course",
+                name: "Wig Construction Masterclass ($199)",
+                detail: "Multi-module video training",
+                price: "",
+                ctas: [{ label: "Enroll Now — $199", href: COURSE_URL_1, variant: "gold" as const }],
+              },
+              {
+                num: "04",
+                bg: "#1a1a1a",
+                band: "$997–$1,500",
+                type: "In-Person",
+                name: "Nashville Intensive Masterclass",
+                detail: "Two-day hands-on workshop, 8–10 students max, held at Beverly's of Nashville",
+                price: "",
+                ctas: [{ label: "Join the Waitlist →", href: "#waitlist", variant: "gold" as const }],
+              },
+              {
+                num: "05",
+                bg: "#111",
+                band: "$3,000+",
+                type: "Elite Mentorship",
+                name: "Private 1-on-1 Mentorship with Teddy",
+                detail: "3-month private coaching program for salon owners",
+                price: "",
+                badge: "Applications Open",
+                ctas: [{ label: "Apply Now →", href: "mailto:teddy@beverlysofnashville.com", variant: "gold" as const }],
+              },
+            ].map((row) => (
+              <div
+                key={row.num}
+                className="fade-up"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "minmax(72px, 100px) 1fr",
+                  gap: "24px 32px",
+                  alignItems: "start",
+                  background: row.bg,
+                  borderBottom: "1px solid rgba(201,168,76,0.12)",
+                  padding: "40px 28px",
+                  borderRadius: 0,
+                }}
+              >
+                <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(48px, 8vw, 80px)", lineHeight: 0.95, color: "#C9A84C", fontWeight: 400 }}>
+                  {row.num}
+                </div>
+                <div>
+                  <div style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "8px" }}>
+                    {row.band} · {row.type}
+                  </div>
+                  <h3 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(20px, 3vw, 28px)", marginBottom: "12px", lineHeight: 1.2 }}>{row.name}</h3>
+                  <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.75, marginBottom: "16px", maxWidth: "720px" }}>{row.detail}</p>
+                  {row.badge && (
+                    <div
+                      style={{
+                        display: "inline-block",
+                        marginBottom: "16px",
+                        border: "1px solid #C9A84C",
+                        color: "#C9A84C",
+                        fontSize: "9px",
+                        letterSpacing: "2px",
+                        textTransform: "uppercase",
+                        padding: "6px 14px",
+                        borderRadius: 0,
+                      }}
+                    >
+                      {row.badge}
                     </div>
-                  ))}
+                  )}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                    {row.ctas.map((c) => {
+                      const cls = c.variant === "outline" ? "btn-outline-gold" : "btn-gold";
+                      const st = { display: "inline-block" as const, fontSize: "10px", padding: "12px 22px" };
+                      if (c.href.startsWith("/")) {
+                        return (
+                          <Link key={c.label} href={c.href} className={cls} style={st}>
+                            {c.label}
+                          </Link>
+                        );
+                      }
+                      return (
+                        <a key={c.label} href={c.href} className={cls} style={st}>
+                          {c.label}
+                        </a>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             ))}
@@ -181,9 +311,9 @@ export default function Academy() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "80px", alignItems: "center" }}>
             <div className="fade-up">
               <img
-                src={PHOTOS.teddySalon3}
-                alt="Teddy Chisom — Beverly's Academy Instructor"
-                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "top", border: "1px solid rgba(201,168,76,0.2)" }}
+                src={PHOTOS.teddyInstructor}
+                alt="Teddy Chisom teaching a Beverly's Academy class — laptop and salon floor"
+                style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 35%", border: "1px solid rgba(201,168,76,0.2)" }}
               />
             </div>
             <div>
@@ -271,42 +401,93 @@ export default function Academy() {
   );
 }
 
+// ── Kit (ConvertKit) public form POST — swap KIT_FORM_ID_ACADEMY_WAITLIST when live. ──
+async function postKitAcademySubscription(payload: Record<string, unknown>) {
+  const url = `https://app.kit.com/forms/${KIT_FORM_ID_ACADEMY_WAITLIST}/subscriptions`;
+  return fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
 // ── Academy Form ──────────────────────────────────────────────────────────
 function AcademyForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  if (submitted) {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === "loading") return;
+    setStatus("loading");
+    try {
+      const res = await postKitAcademySubscription({
+        first_name: firstName.trim(),
+        email_address: email.trim(),
+        tags: "academy-waitlist",
+        fields: { stylist_role: role },
+      });
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
     return (
       <div style={{ textAlign: "center", padding: "32px 0" }}>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
           <BadgeCheck size={44} strokeWidth={1.5} color="#C9A84C" aria-hidden />
         </div>
-        <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", color: "#C9A84C", marginBottom: "10px" }}>You're on the list!</div>
+        <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", color: "#C9A84C", marginBottom: "10px" }}>You&apos;re on the list!</div>
         <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
-          Check your inbox for the free "5 Color Mistakes" guide. We'll be in touch soon with early access details.
+          Check your inbox for the free &quot;5 Color Mistakes&quot; guide. We&apos;ll be in touch soon with early access details.
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+    <form onSubmit={handleSubmit}>
+      <input type="hidden" name="tags" value="academy-waitlist" />
       <div style={{ marginBottom: "20px" }}>
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>First Name</label>
-        <input type="text" required placeholder="Your first name" style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.25)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit" }} />
+        <input
+          type="text"
+          name="first_name"
+          required
+          placeholder="Your first name"
+          value={firstName}
+          onChange={e => setFirstName(e.target.value)}
+          style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.25)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit", borderRadius: 0, boxSizing: "border-box" }}
+        />
       </div>
       <div style={{ marginBottom: "20px" }}>
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Email Address</label>
-        <input type="email" required placeholder="your@email.com" style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.25)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit" }} />
+        <input
+          type="email"
+          name="email_address"
+          required
+          placeholder="your@email.com"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          style={{ width: "100%", padding: "14px 16px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(201,168,76,0.25)", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "inherit", borderRadius: 0, boxSizing: "border-box" }}
+        />
       </div>
       <div style={{ marginBottom: "28px" }}>
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>I Am A...</label>
         <select
+          name="stylist_role"
           value={role}
           onChange={e => setRole(e.target.value)}
           required
-          style={{ width: "100%", padding: "14px 16px", background: "#111", border: "1px solid rgba(201,168,76,0.25)", color: role ? "#fff" : "rgba(255,255,255,0.3)", fontSize: "14px", outline: "none", cursor: "pointer", appearance: "none", fontFamily: "inherit" }}
+          style={{ width: "100%", padding: "14px 16px", background: "#111", border: "1px solid rgba(201,168,76,0.25)", color: role ? "#fff" : "rgba(255,255,255,0.3)", fontSize: "14px", outline: "none", cursor: "pointer", appearance: "none", fontFamily: "inherit", borderRadius: 0, boxSizing: "border-box" }}
         >
           <option value="" disabled>Select your role</option>
           <option value="student">Cosmetology Student</option>
@@ -316,8 +497,11 @@ function AcademyForm() {
           <option value="enthusiast">Hair Enthusiast / DIY</option>
         </select>
       </div>
-      <button type="submit" className="btn-gold" style={{ width: "100%", padding: "16px", fontSize: "11px" }}>
-        Join the Waitlist — Get Free Guide
+      {status === "error" && (
+        <p style={{ fontSize: "13px", color: "#e88", marginBottom: "16px" }}>We couldn&apos;t save your signup just now. Please try again in a moment.</p>
+      )}
+      <button type="submit" className="btn-gold" disabled={status === "loading"} style={{ width: "100%", padding: "16px", fontSize: "11px" }}>
+        {status === "loading" ? "Submitting…" : "Join the Waitlist — Get Free Guide"}
       </button>
       <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", textAlign: "center", marginTop: "16px", lineHeight: 1.5 }}>
         No spam, ever. Unsubscribe anytime. Your free guide arrives instantly.

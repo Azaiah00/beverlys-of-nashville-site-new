@@ -195,9 +195,9 @@ export default function BlogPost() {
           {/* Author bio */}
           <div className="fade-up" style={{ borderTop: "1px solid rgba(201,168,76,0.2)", paddingTop: "40px", marginTop: "48px", display: "flex", gap: "24px", alignItems: "flex-start" }}>
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddyinsalon3_4a47c75a.jpg"
-              alt="Teddy Chisom"
-              style={{ width: "80px", height: "80px", objectFit: "cover", objectPosition: "top", flexShrink: 0, border: "2px solid rgba(201,168,76,0.3)" }}
+              src="/assets/teddy-chisom-profile.png"
+              alt="Teddy Chisom — Beverly's of Nashville"
+              style={{ width: "80px", height: "80px", objectFit: "cover", objectPosition: "center 25%", flexShrink: 0, border: "2px solid rgba(201,168,76,0.3)" }}
             />
             <div>
               <div style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "6px" }}>About the Author</div>

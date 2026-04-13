@@ -3,14 +3,27 @@
  * Design: "Craftsman's Gold" — dark charcoal + gold, Georgia serif, sharp rectangles
  * Nav and Footer match uploaded HTML files exactly
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useLocation } from "wouter";
+
+/** Promo banner height in px — must match CSS used in Nav layout math below. */
+const FREE_GUIDE_BANNER_H = 36;
+const NAV_BAR_H = 70;
 
 // ── NAV ──────────────────────────────────────────────────────────────────
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  /** Session-only: closing the bar hides it until the page is refreshed (no localStorage). */
+  const [freeGuideBannerDismissed, setFreeGuideBannerDismissed] = useState(false);
   const [location] = useLocation();
+
+  const headerOffsetPx = freeGuideBannerDismissed ? NAV_BAR_H : FREE_GUIDE_BANNER_H + NAV_BAR_H;
+
+  // Keep first hero sections aligned under the fixed header (banner + nav).
+  useLayoutEffect(() => {
+    document.documentElement.style.setProperty("--site-fixed-header-height", `${headerOffsetPx}px`);
+  }, [headerOffsetPx]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -26,21 +39,90 @@ export function Nav() {
     { href: "/#services", label: "Services" },
     { href: "/#wigs", label: "Wigs" },
     { href: "/#gallery", label: "Gallery" },
+    { href: "/the-reveal", label: "The Reveal" },
     { href: "/academy", label: "Academy" },
     { href: "/blog", label: "Journal" },
   ];
 
   return (
     <>
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-        height: "70px",
-        background: scrolled ? "rgba(17,17,17,0.97)" : "rgba(17,17,17,0.85)",
-        backdropFilter: "blur(12px)",
-        borderBottom: scrolled ? "1px solid rgba(201,168,76,0.2)" : "1px solid transparent",
-        transition: "all 0.3s ease",
-        display: "flex", alignItems: "center"
-      }}>
+      {/* Fixed stack: dismissible free-guide promo (session state) + main nav */}
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {!freeGuideBannerDismissed && (
+          <div
+            style={{
+              height: `${FREE_GUIDE_BANNER_H}px`,
+              background: "#C9A84C",
+              color: "#111",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingLeft: "12px",
+              paddingRight: "4px",
+              fontFamily: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
+              fontSize: "12px",
+              fontWeight: 600,
+              letterSpacing: "0.02em",
+              borderRadius: 0,
+            }}
+          >
+            <Link
+              href="/free-guide"
+              style={{
+                flex: 1,
+                minWidth: 0,
+                color: "#111",
+                textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+                padding: "0 8px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              ✦ FREE DOWNLOAD: The Master Colorist's Cheat Sheet — Get Yours →
+            </Link>
+            <button
+              type="button"
+              aria-label="Dismiss free guide announcement"
+              onClick={() => setFreeGuideBannerDismissed(true)}
+              style={{
+                flexShrink: 0,
+                width: "32px",
+                height: "32px",
+                border: "none",
+                background: "transparent",
+                color: "#111",
+                fontSize: "18px",
+                lineHeight: 1,
+                cursor: "pointer",
+                borderRadius: 0,
+              }}
+            >
+              ×
+            </button>
+          </div>
+        )}
+        <nav style={{
+          height: `${NAV_BAR_H}px`,
+          background: scrolled ? "rgba(17,17,17,0.97)" : "rgba(17,17,17,0.85)",
+          backdropFilter: "blur(12px)",
+          borderBottom: scrolled ? "1px solid rgba(201,168,76,0.2)" : "1px solid transparent",
+          transition: "all 0.3s ease",
+          display: "flex", alignItems: "center"
+        }}>
         <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo — image from client/public/assets; links home */}
           <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", lineHeight: 0 }}>
@@ -99,11 +181,12 @@ export function Nav() {
             </div>
           </button>
         </div>
-      </nav>
+        </nav>
+      </header>
 
       {/* Mobile menu drawer */}
       <div style={{
-        position: "fixed", top: "70px", left: 0, right: 0, zIndex: 999,
+        position: "fixed", top: `${headerOffsetPx}px`, left: 0, right: 0, zIndex: 999,
         background: "rgba(17,17,17,0.98)", backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(201,168,76,0.2)",
         padding: mobileOpen ? "24px 0 32px" : "0",
@@ -205,6 +288,7 @@ export function Footer() {
             <div style={{ fontSize: "9px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "20px" }}>Salon</div>
             {[
               { href: "/#services", label: "Services" },
+              { href: "/the-reveal", label: "The Reveal Session" },
               { href: "/#wigs", label: "Wig Boutique" },
               { href: "/#gallery", label: "Gallery" },
               { href: "/#about", label: "About Teddy" },
