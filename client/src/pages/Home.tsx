@@ -466,7 +466,7 @@ export default function Home() {
         <div className="container">
           <p className="eyebrow fade-up" style={{ textAlign: "center" }}>The Work</p>
           <h2 className="section-title fade-up" style={{ textAlign: "center" }}>Hair Gallery</h2>
-          <p className="fade-up" style={{ color: "rgba(255,255,255,0.6)", textAlign: "center", marginTop: "10px", fontSize: "14px" }}>Every transformation tells a story.</p>
+          <p className="fade-up" style={{ color: "rgba(255,255,255,0.6)", textAlign: "center", marginTop: "10px", fontSize: "14px" }}>Coming soon — a refreshed gallery of our latest transformations.</p>
 
           <div
             className="fade-up"
