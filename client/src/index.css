@@ -406,6 +406,32 @@ html {
   }
 }
 
+/* Home Reveal — à la carte toggles: responsive mosaic */
+.reveal-a-la-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 400px) {
+  .reveal-a-la-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Home Reveal — celebration package cards */
+.reveal-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .reveal-packages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* The Reveal landing — 3-up cards and add-ons stack on narrow screens */
 .reveal-included-grid {
   display: grid;

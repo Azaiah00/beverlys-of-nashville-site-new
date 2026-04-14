@@ -31,6 +31,254 @@ const EBOOK_URL_1 = "EBOOK_URL_1";
 const EBOOK_URL_2 = "EBOOK_URL_2";
 const COURSE_URL_1 = "COURSE_URL_1";
 
+/** The Reveal Session — base + clickable add-ons + celebration packages (home estimator). */
+const REVEAL_BASE = 375;
+
+const REVEAL_ADDONS = [
+  { id: "outfit", label: "Extra Outfit Change", price: 50 },
+  { id: "rush", label: "Rush 24hr Photo Delivery", price: 35 },
+  { id: "photo60", label: "Extended Photo Session (60 min)", price: 75 },
+  { id: "deep", label: "Deep Conditioning Mask", price: 40 },
+  { id: "secondlook", label: "Second Hair Look (same visit)", price: 55 },
+  { id: "clipin", label: "Clip-in / Extension Blend", price: 45 },
+  { id: "brow", label: "Brow Sculpt & Fill", price: 35 },
+  { id: "lash", label: "Lash Strip Application", price: 40 },
+  { id: "steam", label: "Steam Treatment & Gloss", price: 30 },
+  { id: "vip", label: "VIP Buffer (+15 min salon time)", price: 25 },
+] as const;
+
+type RevealPackageDef = {
+  id: string;
+  name: string;
+  blurb: string;
+  price: number;
+  includedAddonIds: readonly string[];
+  badge?: string;
+};
+
+const REVEAL_PACKAGES: readonly RevealPackageDef[] = [
+  {
+    id: "prom",
+    name: "Prom Night",
+    blurb: "Second look energy, rushed gallery, and lashes — camera-ready for the dance floor.",
+    price: 458,
+    includedAddonIds: ["secondlook", "rush", "lash"],
+    badge: "Spring season",
+  },
+  {
+    id: "wedding",
+    name: "Bridal & Bridesmaids",
+    blurb: "Extended shoot time, outfit change, and deep treatment for veil-ready shine.",
+    price: 529,
+    includedAddonIds: ["photo60", "outfit", "deep"],
+    badge: "Most booked",
+  },
+  {
+    id: "anniversary",
+    name: "Anniversary Date Night",
+    blurb: "Steam gloss, brows, and rush delivery so you have proofs before your reservation.",
+    price: 469,
+    includedAddonIds: ["steam", "brow", "rush"],
+  },
+  {
+    id: "birthday",
+    name: "Birthday Spotlight",
+    blurb: "Clip-ins, outfit change, and VIP buffer — main character energy all day.",
+    price: 489,
+    includedAddonIds: ["clipin", "outfit", "vip"],
+  },
+  {
+    id: "milestone",
+    name: "Milestone Glow-Up",
+    blurb: "Deep mask, second look, and extended photos — for new jobs, new chapters, new you.",
+    price: 519,
+    includedAddonIds: ["deep", "secondlook", "photo60"],
+  },
+  {
+    id: "corporate",
+    name: "Executive Headshot Day",
+    blurb: "Rush edits, brow cleanup, and steam polish — LinkedIn-ready the next morning.",
+    price: 449,
+    includedAddonIds: ["rush", "brow", "steam"],
+  },
+] as const;
+
+function addonPrice(id: string): number {
+  return REVEAL_ADDONS.find(a => a.id === id)?.price ?? 0;
+}
+
+function packageRetail(pkg: RevealPackageDef): number {
+  return REVEAL_BASE + pkg.includedAddonIds.reduce((s, id) => s + addonPrice(id), 0);
+}
+
+/** Interactive total, celebration packages, and à la carte toggles for The Reveal Session. */
+function RevealSessionEstimator() {
+  const [selected, setSelected] = useState<Set<string>>(() => new Set());
+  const [activePackageId, setActivePackageId] = useState<string | null>(null);
+
+  const activePkg = activePackageId ? REVEAL_PACKAGES.find(p => p.id === activePackageId) ?? null : null;
+
+  const totalAlaCarte = REVEAL_BASE + Array.from(selected).reduce((s, id) => s + addonPrice(id), 0);
+  const total = activePkg ? activePkg.price : totalAlaCarte;
+  const compareAt = activePkg ? packageRetail(activePkg) : null;
+  const saving = compareAt !== null && compareAt > total ? compareAt - total : 0;
+
+  const toggleAddon = (id: string) => {
+    setActivePackageId(null);
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const selectPackage = (id: string) => {
+    setActivePackageId(prev => (prev === id ? null : id));
+    setSelected(new Set());
+  };
+
+  const clearAll = () => {
+    setActivePackageId(null);
+    setSelected(new Set());
+  };
+
+  const isAddonOn = (id: string) => {
+    if (activePkg) return activePkg.includedAddonIds.includes(id);
+    return selected.has(id);
+  };
+
+  const summaryLines: string[] = [];
+  if (activePkg) {
+    summaryLines.push(`Package: ${activePkg.name}`);
+    summaryLines.push(`Included add-ons: ${activePkg.includedAddonIds.map(i => REVEAL_ADDONS.find(a => a.id === i)?.label ?? i).join(", ")}`);
+  } else if (selected.size) {
+    summaryLines.push(`À la carte: ${Array.from(selected).map(id => `${REVEAL_ADDONS.find(a => a.id === id)?.label ?? id} (+$${addonPrice(id)})`).join("; ")}`);
+  } else {
+    summaryLines.push("The Reveal Session base package only");
+  }
+  summaryLines.push(`Estimate total: $${total}`);
+
+  const mailBody = encodeURIComponent(summaryLines.join("\n"));
+  const mailtoEstimate = `mailto:teddy@beverlysofnashville.com?subject=${encodeURIComponent("The Reveal Session — My estimate")}&body=${mailBody}`;
+
+  return (
+    <div
+      className="fade-up reveal-a-la-carte"
+      style={{
+        marginTop: "8px",
+        paddingTop: "28px",
+        borderTop: "1px solid rgba(201,168,76,0.22)",
+        maxWidth: "560px",
+      }}
+    >
+      <p style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "8px" }}>
+        Build your session
+      </p>
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "12px 20px", marginBottom: "8px" }}>
+        <span style={{ fontFamily: "Georgia, serif", fontSize: "clamp(40px, 6vw, 52px)", color: "#C9A84C", lineHeight: 1 }}>
+          ${total}
+        </span>
+        {compareAt !== null && compareAt > total && (
+          <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", textDecoration: "line-through" }}>
+            ${compareAt} à la carte
+          </span>
+        )}
+        {saving > 0 && (
+          <span style={{ fontSize: "12px", letterSpacing: "1px", color: "#C9A84C", textTransform: "uppercase" }}>
+            Package saves ${saving}
+          </span>
+        )}
+      </div>
+      <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", marginBottom: "22px", lineHeight: 1.6 }}>
+        Tap a celebration package for a bundled rate, or mix your own add-ons. Base Reveal (${REVEAL_BASE}) is always included. Final price confirmed when you book.
+      </p>
+
+      <p style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "12px" }}>
+        Celebration packages
+      </p>
+      <div className="reveal-packages-grid" style={{ marginBottom: "28px" }}>
+        {REVEAL_PACKAGES.map(pkg => {
+          const on = activePackageId === pkg.id;
+          return (
+            <button
+              key={pkg.id}
+              type="button"
+              onClick={() => selectPackage(pkg.id)}
+              style={{
+                textAlign: "left",
+                background: on ? "rgba(201,168,76,0.12)" : "rgba(17,17,17,0.9)",
+                border: on ? "2px solid #C9A84C" : "1px solid rgba(201,168,76,0.25)",
+                padding: "16px 16px 18px",
+                borderRadius: 0,
+                cursor: "pointer",
+                color: "#fff",
+                fontFamily: "inherit",
+              }}
+            >
+              {pkg.badge && (
+                <span style={{ display: "inline-block", fontSize: "8px", letterSpacing: "2px", textTransform: "uppercase", color: "#111", background: "#C9A84C", padding: "4px 8px", marginBottom: "10px" }}>
+                  {pkg.badge}
+                </span>
+              )}
+              <div style={{ fontFamily: "Georgia, serif", fontSize: "17px", color: "#fff", marginBottom: "6px" }}>{pkg.name}</div>
+              <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", lineHeight: 1.55, marginBottom: "12px" }}>{pkg.blurb}</div>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: "22px", color: "#C9A84C" }}>${pkg.price}</div>
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginTop: "4px" }}>Tap again to deselect</div>
+            </button>
+          );
+        })}
+      </div>
+
+      <p style={{ fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "12px" }}>
+        À la carte add-ons
+      </p>
+      <div className="reveal-a-la-grid">
+        {REVEAL_ADDONS.map(a => {
+          const on = isAddonOn(a.id);
+          const pkgLocked = Boolean(activePkg);
+          return (
+            <button
+              key={a.id}
+              type="button"
+              disabled={pkgLocked}
+              onClick={() => toggleAddon(a.id)}
+              aria-pressed={on}
+              style={{
+                background: on ? "rgba(201,168,76,0.14)" : "rgba(17,17,17,0.85)",
+                border: on ? "2px solid #C9A84C" : "1px solid rgba(201,168,76,0.2)",
+                padding: "14px 12px",
+                borderRadius: 0,
+                textAlign: "center",
+                cursor: pkgLocked ? "default" : "pointer",
+                opacity: pkgLocked && !on ? 0.4 : 1,
+                color: "#fff",
+                fontFamily: "inherit",
+              }}
+            >
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.85)", lineHeight: 1.35, marginBottom: "8px" }}>
+                {a.label}
+              </div>
+              <div style={{ fontFamily: "Georgia, serif", fontSize: "18px", color: "#C9A84C" }}>+${a.price}</div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px", marginTop: "20px" }}>
+        {(activePackageId || selected.size > 0) && (
+          <button type="button" onClick={clearAll} className="btn-outline" style={{ fontSize: "10px", padding: "10px 18px" }}>
+            Clear all
+          </button>
+        )}
+        <a href={mailtoEstimate} className="btn-outline-gold" style={{ fontSize: "10px", padding: "10px 18px", display: "inline-block" }}>
+          Email this estimate →
+        </a>
+      </div>
+    </div>
+  );
+}
+
 // ── Real photo CDN URLs (uploaded by client) ──────────────────────────────
 const PHOTOS = {
   teddyHero: "https://d2xsxph8kpxj0f.cloudfront.net/310519663497099941/gxRiXS3mGqaq9yk3PkuwhP/teddy-in-salon_3b149114.jpg",
@@ -304,11 +552,11 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "16px 24px", marginBottom: "28px" }}>
-              <span style={{ fontFamily: "Georgia, serif", fontSize: "52px", color: "#C9A84C", lineHeight: 1 }}>$375</span>
-              <span style={{ fontSize: "15px", color: "rgba(255,255,255,0.4)", textDecoration: "line-through" }}>$550+ value</span>
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginBottom: "16px" }}>
+            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", marginBottom: "8px", maxWidth: "520px" }}>
+              <span style={{ color: "#C9A84C", fontWeight: 600 }}>$375</span> base Reveal · <span style={{ textDecoration: "line-through", color: "rgba(255,255,255,0.35)" }}>$550+ value</span> — use the builder below to preview add-ons or a celebration package.
+            </p>
+            <RevealSessionEstimator />
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "24px", marginBottom: "8px" }}>
               <a
                 href="mailto:teddy@beverlysofnashville.com?subject=The%20Reveal%20Session%20Booking"
                 className="btn-gold"
@@ -319,7 +567,8 @@ export default function Home() {
                 Learn More
               </a>
             </div>
-            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", margin: 0 }}>
+
+            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", margin: "16px 0 0" }}>
               Limited availability — by appointment only
             </p>
           </div>
