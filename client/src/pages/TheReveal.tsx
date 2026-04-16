@@ -192,7 +192,7 @@ export default function TheReveal() {
               marginTop: "48px",
               background: "#0D0D0D",
               border: "2px solid #C9A84C",
-              padding: "48px 40px",
+              padding: "clamp(28px, 6vw, 48px) clamp(20px, 5vw, 40px)",
               borderRadius: 0,
               textAlign: "center",
             }}
@@ -200,7 +200,7 @@ export default function TheReveal() {
             <div style={{ fontSize: "11px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "12px" }}>
               The Reveal Session — Complete Package
             </div>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: "56px", color: "#C9A84C", lineHeight: 1, marginBottom: "8px" }}>$375</div>
+            <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(40px, 10vw, 56px)", color: "#C9A84C", lineHeight: 1, marginBottom: "8px" }}>$375</div>
             <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.45)", marginBottom: "28px" }}>($550+ combined value)</div>
             <div style={{ height: "1px", background: "rgba(201,168,76,0.25)", marginBottom: "28px" }} aria-hidden />
             <div style={{ textAlign: "left", maxWidth: "420px", margin: "0 auto 32px", display: "flex", flexDirection: "column", gap: "12px" }}>

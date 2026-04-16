@@ -152,7 +152,7 @@ Add a redirect in `netlify.toml`:
 3. The Postgres trigger auto-flips `is_admin = true`
 4. Navigate to `/portal` — you should see the gold **ADMIN** badge and full access
 
-Repeat for `teddy@beverlysofnashville.com` and `monica@beverlysofnashville.com`.
+Repeat for other trusted admin emails (see `client/src/lib/admins.ts` — e.g. `teddychisom1963@gmail.com`).
 
 ## 8. Port the remaining 6 HTML products
 

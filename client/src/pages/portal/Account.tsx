@@ -10,9 +10,10 @@ const GOLD = "#C9A84C";
 const CHARCOAL = "#1A1A1A";
 
 export default function Account() {
-  const { user, profile, subscription, tier, isAdmin } = useAuth();
+  const { user, profile, subscription, tier, isAdmin, portalDemoUnlock } = useAuth();
 
   const openStripePortal = async () => {
+    if (!user?.id) return;
     const res = await fetch("/api/create-portal-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,14 +34,32 @@ export default function Account() {
 
       {/* Profile card */}
       <Card>
-        <Row icon={<Mail size={18} color={GOLD} />} label="Email" value={user?.email ?? ""} />
-        <Row icon={<Shield size={18} color={GOLD} />} label="Role" value={isAdmin ? "Admin (all tiers unlocked)" : tier.charAt(0).toUpperCase() + tier.slice(1)} />
+        <Row
+          icon={<Mail size={18} color={GOLD} />}
+          label="Email"
+          value={portalDemoUnlock && !user ? "— (demo: not signed in)" : user?.email ?? "—"}
+        />
+        <Row
+          icon={<Shield size={18} color={GOLD} />}
+          label="Role"
+          value={
+            portalDemoUnlock && !isAdmin
+              ? "Demo — portal unlocked locally"
+              : isAdmin
+                ? "Admin (all tiers unlocked)"
+                : tier.charAt(0).toUpperCase() + tier.slice(1)
+          }
+        />
         {profile?.full_name && <Row icon={null} label="Name" value={profile.full_name} />}
       </Card>
 
       {/* Subscription card */}
       <Card title="Subscription & Billing">
-        {isAdmin ? (
+        {portalDemoUnlock && !user ? (
+          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>
+            Billing is hidden during the demo walkthrough. Turn off <code style={{ color: GOLD }}>VITE_PORTAL_DEMO_UNLOCK</code> and sign in to test Stripe / subscriptions.
+          </p>
+        ) : isAdmin ? (
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>
             Admin accounts don't need a subscription — you have full access automatically.
           </p>

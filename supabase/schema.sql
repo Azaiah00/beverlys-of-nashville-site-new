@@ -51,11 +51,10 @@ declare
   v_email text := lower(coalesce(new.email, ''));
   v_is_admin boolean := false;
 begin
-  -- Hardcoded admin whitelist (Couture, Teddy, Monica)
+  -- Hardcoded admin whitelist (Couture + Beverly's owner Gmail — keep in sync with client/src/lib/admins.ts)
   if v_email in (
     'hello@couturehouse.co',
-    'teddy@beverlysofnashville.com',
-    'monica@beverlysofnashville.com'
+    'teddychisom1963@gmail.com'
   ) then
     v_is_admin := true;
   end if;
@@ -212,8 +211,7 @@ update public.profiles
    set is_admin = true, role = 'admin'
  where lower(email) in (
    'hello@couturehouse.co',
-   'teddy@beverlysofnashville.com',
-   'monica@beverlysofnashville.com'
+   'teddychisom1963@gmail.com'
  );
 
 -- ── DONE ────────────────────────────────────────────────────────────────────

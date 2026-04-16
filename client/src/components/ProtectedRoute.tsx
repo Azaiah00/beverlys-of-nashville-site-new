@@ -32,20 +32,20 @@ export default function ProtectedRoute({
   loginRedirect = "/login",
   upgradeRedirect = "/pricing",
 }: Props) {
-  const { loading, user, isAdmin, can, hasTier } = useAuth();
+  const { loading, user, isAdmin, portalDemoUnlock, can, hasTier } = useAuth();
   const [location, setLocation] = useLocation();
 
   useEffect(() => {
     if (loading) return;
 
-    // 1. Not logged in → redirect to login with return URL
-    if (!user) {
+    // 1. Not logged in → redirect to login (skip when demo unlock flag is on)
+    if (!user && !portalDemoUnlock) {
       setLocation(`${loginRedirect}?next=${encodeURIComponent(location)}`);
       return;
     }
 
-    // 2. Admin bypass — always allow
-    if (isAdmin) return;
+    // 2. Admin or demo unlock — always allow past auth / paywall gates
+    if (isAdmin || portalDemoUnlock) return;
 
     // 3. Product-specific check
     if (requireProduct && !can(requireProduct)) {
@@ -62,6 +62,7 @@ export default function ProtectedRoute({
     loading,
     user,
     isAdmin,
+    portalDemoUnlock,
     requireProduct,
     requireTier,
     can,
@@ -93,9 +94,9 @@ export default function ProtectedRoute({
     );
   }
 
-  if (!user) return null; // redirect will fire
-  if (!isAdmin && requireProduct && !can(requireProduct)) return null;
-  if (!isAdmin && requireTier && !hasTier(requireTier)) return null;
+  if (!user && !portalDemoUnlock) return null; // redirect will fire
+  if (!isAdmin && !portalDemoUnlock && requireProduct && !can(requireProduct)) return null;
+  if (!isAdmin && !portalDemoUnlock && requireTier && !hasTier(requireTier)) return null;
 
   return <>{children}</>;
 }

@@ -2,7 +2,7 @@
  * Beverly's Academy Portal — Admin Whitelist
  * ----------------------------------------------------------------
  * Every email here automatically bypasses EVERY paywall and tier gate.
- * Couture House team, Teddy, and Monica see every product, tool, and
+ * Couture House team and Beverly's owner see every product, tool, and
  * admin panel without ever needing a subscription.
  *
  * TWO layers of protection:
@@ -23,12 +23,11 @@ export const ADMIN_EMAILS: string[] = [
   // ── Couture House team ──
   "hello@couturehouse.co",
 
-  // ── Beverly's of Nashville ──
-  "teddy@beverlysofnashville.com",
-  "monica@beverlysofnashville.com",
+  // ── Beverly's — real owner inbox (placeholders @beverlysofnashville.com were not live mailboxes)
+  "teddychisom1963@gmail.com",
 
-  // Add additional admin emails below as needed.
-  // Make sure to also run the Supabase UPDATE above.
+  // Add Monica or other staff here when you have their real sign-in emails.
+  // Make sure to also run the Supabase UPDATE / handle_new_user change in schema.sql.
 ];
 
 /** Case-insensitive admin check for an email. */

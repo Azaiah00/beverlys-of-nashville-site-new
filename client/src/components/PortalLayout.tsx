@@ -19,6 +19,7 @@ import {
   Menu,
   X,
   Sparkles,
+  ArrowLeft,
 } from "lucide-react";
 
 const GOLD = "#C9A84C";
@@ -34,11 +35,12 @@ const navItems = [
 ];
 
 export default function PortalLayout({ children }: { children: ReactNode }) {
-  const { user, profile, tier, isAdmin, signOut } = useAuth();
+  const { user, profile, tier, isAdmin, portalDemoUnlock, isUnrestricted, signOut } = useAuth();
   const [location] = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const displayName = profile?.full_name || user?.email?.split("@")[0] || "Member";
+  const displayName =
+    portalDemoUnlock && !user ? "Demo walkthrough" : profile?.full_name || user?.email?.split("@")[0] || "Member";
   const tierLabel = tier === "free" ? "Free" : tier.charAt(0).toUpperCase() + tier.slice(1);
 
   const isActive = (path: string, exact: boolean | undefined) =>
@@ -104,8 +106,8 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
         {/* Tier Badge */}
         <div
           style={{
-            background: isAdmin ? GOLD : "rgba(201,168,76,0.1)",
-            color: isAdmin ? CHARCOAL : GOLD,
+            background: isUnrestricted ? GOLD : "rgba(201,168,76,0.1)",
+            color: isUnrestricted ? CHARCOAL : GOLD,
             fontSize: "10px",
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -120,7 +122,11 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
             gap: "6px",
           }}
         >
-          {isAdmin ? (
+          {portalDemoUnlock && !isAdmin ? (
+            <>
+              <Sparkles size={12} strokeWidth={2.5} /> Demo — all unlocked
+            </>
+          ) : isAdmin ? (
             <>
               <Shield size={12} strokeWidth={2.5} /> Admin Mode
             </>
@@ -188,44 +194,128 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
         {/* Footer: user info + sign out */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "16px" }}>
           <div style={{ fontSize: "13px", color: "#fff", marginBottom: "2px", fontWeight: 600 }}>{displayName}</div>
-          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", marginBottom: "12px" }}>
-            {user?.email}
+          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", marginBottom: "16px", wordBreak: "break-all" }}>
+            {portalDemoUnlock && !user ? "VITE_PORTAL_DEMO_UNLOCK=true — no sign-in" : user?.email}
           </div>
-          <button
-            onClick={() => signOut()}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "8px 12px",
-              background: "transparent",
-              border: "1px solid rgba(255,255,255,0.15)",
-              color: "rgba(255,255,255,0.7)",
-              fontSize: "12px",
-              borderRadius: "4px",
-              cursor: "pointer",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            <LogOut size={14} /> Sign out
-          </button>
+          
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <Link href="/">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "8px 12px",
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  color: "rgba(255,255,255,0.8)",
+                  fontSize: "12px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  width: "100%",
+                  justifyContent: "center",
+                  transition: "all 0.2s",
+                }}
+              >
+                <ArrowLeft size={14} /> Back to Website
+              </div>
+            </Link>
+
+            {user ? (
+              <button
+                type="button"
+                onClick={() => signOut()}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "8px 12px",
+                  background: "transparent",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "rgba(255,255,255,0.7)",
+                  fontSize: "12px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  width: "100%",
+                  justifyContent: "center",
+                  transition: "all 0.2s",
+                }}
+              >
+                <LogOut size={14} /> Sign out
+              </button>
+            ) : (
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)", lineHeight: 1.5, textAlign: "center" }}>
+                Remove demo flag from <code style={{ color: GOLD }}>.env.local</code> to require login again.
+              </div>
+            )}
+          </div>
         </div>
       </aside>
 
       {/* ── Main ── */}
-      <main style={{ flex: 1, minWidth: 0, padding: "40px 48px 80px" }}>{children}</main>
+      <main style={{ flex: 1, minWidth: 0, padding: "40px 48px 80px" }}>
+        {children}
+      </main>
 
-      {/* Mobile drawer toggle (future v1.5) */}
+      {/* Mobile hamburger — visible ≤900px */}
+      <button
+        type="button"
+        aria-label="Toggle portal menu"
+        onClick={() => setDrawerOpen(!drawerOpen)}
+        className="portal-mobile-toggle"
+        style={{
+          position: "fixed",
+          top: "16px",
+          left: "16px",
+          zIndex: 200,
+          width: "44px",
+          height: "44px",
+          borderRadius: "8px",
+          background: CHARCOAL,
+          border: `1px solid ${GOLD}`,
+          color: GOLD,
+          display: "none",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+        }}
+      >
+        {drawerOpen ? <X size={22} /> : <Menu size={22} />}
+      </button>
+
+      {/* Backdrop overlay when drawer is open on mobile */}
+      {drawerOpen && (
+        <div
+          className="portal-backdrop"
+          onClick={() => setDrawerOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            zIndex: 99,
+            display: "none",
+          }}
+        />
+      )}
+
       <style>{`
         @media (max-width: 900px) {
           .portal-sidebar {
-            position: fixed;
-            left: ${drawerOpen ? "0" : "-280px"};
-            z-index: 100;
+            position: fixed !important;
+            left: ${drawerOpen ? "0" : "-280px"} !important;
+            z-index: 150;
+            width: 260px !important;
+            overflow-y: auto;
+          }
+          .portal-mobile-toggle {
+            display: flex !important;
+          }
+          .portal-backdrop {
+            display: block !important;
           }
           main {
-            padding: 24px !important;
+            padding: 24px 16px 60px !important;
           }
         }
       `}</style>

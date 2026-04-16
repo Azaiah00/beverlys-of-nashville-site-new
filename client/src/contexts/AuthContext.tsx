@@ -26,6 +26,7 @@ import type { Session, User } from "@supabase/supabase-js";
 import { supabase, type Profile, type Subscription, type Tier } from "@/lib/supabase";
 import { isAdminEmail } from "@/lib/admins";
 import { getProduct, tierSatisfies } from "@/lib/products";
+import { isPortalDemoUnlock } from "@/lib/portalDemoUnlock";
 
 interface AuthContextValue {
   loading: boolean;
@@ -41,6 +42,11 @@ interface AuthContextValue {
 
   /** True if current user's tier (or admin status) satisfies the required tier. */
   hasTier: (requiredTier: Tier) => boolean;
+
+  /** Env flag: portal open without login (demo only). */
+  portalDemoUnlock: boolean;
+  /** Admin OR demo unlock — full library UI, no paywall. */
+  isUnrestricted: boolean;
 
   /** Auth actions */
   signUp: (email: string, password: string, fullName?: string) => Promise<{ error: string | null }>;
@@ -140,7 +146,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadProfileAndSubscription]);
 
   // ── Compute tier & admin flag ──
+  const portalDemoUnlock = isPortalDemoUnlock();
   const isAdmin = Boolean(profile?.is_admin) || isAdminEmail(user?.email);
+  const isUnrestricted = isAdmin || portalDemoUnlock;
 
   const tier: Tier = (() => {
     if (!user) return "free";
@@ -156,6 +164,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // ── Access check (with admin bypass) ──
   const can = useCallback(
     (productSlug: string): boolean => {
+      // Demo: show every product without Supabase session.
+      if (portalDemoUnlock) return true;
       // 1. Admin always wins.
       if (isAdmin) return true;
 
@@ -169,15 +179,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // 4. Tier check.
       return tierSatisfies(tier, product.requiredTier);
     },
-    [isAdmin, tier, user],
+    [portalDemoUnlock, isAdmin, tier, user],
   );
 
   const hasTier = useCallback(
     (requiredTier: Tier): boolean => {
+      if (portalDemoUnlock) return true;
       if (isAdmin) return true;
       return tierSatisfies(tier, requiredTier);
     },
-    [isAdmin, tier],
+    [portalDemoUnlock, isAdmin, tier],
   );
 
   // ── Auth actions ──
@@ -232,6 +243,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     subscription,
     tier,
     isAdmin,
+    portalDemoUnlock,
+    isUnrestricted,
     can,
     hasTier,
     signUp,

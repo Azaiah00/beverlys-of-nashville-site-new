@@ -83,10 +83,11 @@ export default function Academy() {
         <div className="container">
           <div className="academy-waitlist-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
             {/* Form */}
-            <div className="fade-up" style={{ background: "#1a1a1a", border: "1px solid rgba(201,168,76,0.2)", padding: "48px 40px" }}>
+            <div className="fade-up" style={{ background: "#1a1a1a", border: "1px solid rgba(201,168,76,0.2)", padding: "clamp(28px, 6vw, 48px) clamp(20px, 5vw, 40px)" }}>
               <h2 style={{ fontFamily: "Georgia, serif", fontSize: "26px", marginBottom: "8px" }}>Join the Academy Waitlist</h2>
               <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", lineHeight: 1.6, marginBottom: "32px" }}>
-                Be the first to access Teddy's educational products. Waitlist members get early-bird pricing and exclusive bonuses — including the free "5 Color Mistakes" guide instantly upon signup.
+                {/* Brand voice: name lives in About / instructor — waitlist stays benefit-led without repeating it. */}
+                Be the first to access Beverly&apos;s Academy products. Waitlist members get early-bird pricing and exclusive bonuses — including the free &quot;5 Color Mistakes&quot; guide instantly upon signup.
               </p>
               <AcademyForm />
             </div>
@@ -94,9 +95,9 @@ export default function Academy() {
             {/* Benefits */}
             <div>
               {[
-                { num: "01", title: "Instant Free Guide", desc: "Get Teddy's '5 Color Mistakes Every Stylist Makes (And How to Fix Them)' PDF guide immediately upon joining the waitlist." },
+                { num: "01", title: "Instant Free Guide", desc: "Get the '5 Color Mistakes Every Stylist Makes (And How to Fix Them)' PDF guide immediately upon joining the waitlist." },
                 { num: "02", title: "Early-Bird Pricing", desc: "Waitlist members get 30–40% off all Academy products at launch. Lock in your price before the public release." },
-                { num: "03", title: "Exclusive Bonuses", desc: "First-access to live Q&A sessions with Teddy, bonus video content, and members-only community access." },
+                { num: "03", title: "Exclusive Bonuses", desc: "First-access to live Q&A sessions with the Academy team, bonus video content, and members-only community access." },
                 { num: "04", title: "Launch Notification", desc: "Be the first to know when each product drops — before it's announced to the public." },
               ].map(b => (
                 <div key={b.num} className="fade-up" style={{ display: "flex", gap: "20px", marginBottom: "36px" }}>
@@ -145,7 +146,7 @@ export default function Academy() {
                 style={{ background: "#111", border: "1px solid rgba(201,168,76,0.2)", padding: "0", display: "flex", flexDirection: "column", borderRadius: 0 }}
               >
                 <div style={{ position: "relative" }}>
-                  <img src={book.cover} alt="" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", borderBottom: "1px solid rgba(201,168,76,0.2)" }} loading="lazy" />
+                  <img src={book.cover} alt="" style={{ width: "100%", aspectRatio: "9/16", objectFit: "cover", borderBottom: "1px solid rgba(201,168,76,0.2)" }} loading="lazy" />
                   <div
                     style={{
                       position: "absolute",

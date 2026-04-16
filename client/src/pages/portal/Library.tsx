@@ -14,7 +14,7 @@ const GOLD = "#C9A84C";
 type Filter = "all" | "unlocked" | "locked" | "ebook" | "masterclass" | "toolkit";
 
 export default function Library() {
-  const { can, isAdmin } = useAuth();
+  const { can, isUnrestricted } = useAuth();
   const [filter, setFilter] = useState<Filter>("all");
 
   const all: Product[] = [...PRODUCTS, ...TOOLS];
@@ -36,7 +36,7 @@ export default function Library() {
           Every product Teddy has built.
         </h1>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "16px" }}>
-          {isAdmin ? "As admin, you have full access to everything." : "Unlock more by upgrading your tier."}
+          {isUnrestricted ? "Full library unlocked for this session." : "Unlock more by upgrading your tier."}
         </p>
       </div>
 

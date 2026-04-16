@@ -344,7 +344,7 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div className="fade-up" style={{ display: "flex", gap: "48px", marginTop: "64px", paddingTop: "40px", borderTop: "1px solid rgba(201,168,76,0.2)", flexWrap: "wrap" }}>
+          <div className="fade-up hero-stats" style={{ display: "flex", gap: "48px", marginTop: "64px", paddingTop: "40px", borderTop: "1px solid rgba(201,168,76,0.2)", flexWrap: "wrap" }}>
             {[
               { num: "30+", label: "Years of Excellence" },
               { num: "5,000+", label: "Happy Clients" },
@@ -365,15 +365,15 @@ export default function Home() {
         <div className="container">
           <div className="about-grid">
             {/* Image */}
-            <div className="fade-up" style={{ position: "relative" }}>
+            <div className="fade-up" style={{ position: "relative", overflow: "hidden" }}>
               <img
                 src={PHOTOS.teddyAbout}
                 alt="Teddy Chisom — Master Stylist at Beverly's of Nashville"
                 style={{ width: "100%", aspectRatio: "3/4", objectFit: "cover", objectPosition: "center 20%" }}
               />
               <div style={{
-                position: "absolute", bottom: "-20px", right: "-20px",
-                width: "120px", height: "120px", background: "#C9A84C",
+                position: "absolute", bottom: "0", right: "0",
+                width: "clamp(80px, 18vw, 120px)", height: "clamp(80px, 18vw, 120px)", background: "#C9A84C",
                 display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"
               }}>
                 <div style={{ fontFamily: "Georgia, serif", fontSize: "36px", color: "#111", lineHeight: 1 }}>30+</div>
@@ -533,7 +533,7 @@ export default function Home() {
               Hair. Makeup. Photos. All in one appointment — at Beverly&apos;s of Nashville.
             </p>
             <p style={{ fontSize: "14px", lineHeight: 1.75, color: "rgba(255,255,255,0.65)", maxWidth: "520px", marginBottom: "32px" }}>
-              Teddy styles your hair. Our makeup artist perfects your look. Then our in-salon photographer captures it all in Beverly&apos;s stunning studio space. You leave with 10 professionally edited photos and the best version of yourself.
+              We style your hair. Our makeup artist perfects your look. Then our in-salon photographer captures it all in Beverly&apos;s stunning studio space. You leave with 10 professionally edited photos and the best version of yourself.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "stretch", gap: "0", marginBottom: "32px", maxWidth: "520px" }}>
               {[
@@ -577,9 +577,11 @@ export default function Home() {
             style={{
               position: "relative",
               minHeight: "280px",
+              // @ts-expect-error CSS custom property for mobile override in index.css
+              "--reveal-bg": `url(${PHOTOS.revealSessionSalon})`,
               backgroundImage: `linear-gradient(to right, rgba(13,13,13,0.88) 0%, rgba(13,13,13,0.2) 38%, transparent 55%), url(${PHOTOS.revealSessionSalon})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: "center 25%",
             }}
           >
             <div
@@ -808,10 +810,10 @@ export default function Home() {
           </div>
 
           {/* Waitlist */}
-          <div className="fade-up" style={{ background: "#111", border: "1px solid rgba(201,168,76,0.2)", padding: "48px 40px", marginTop: "40px", maxWidth: "680px" }}>
+          <div className="fade-up" style={{ background: "#111", border: "1px solid rgba(201,168,76,0.2)", padding: "clamp(28px, 6vw, 48px) clamp(20px, 5vw, 40px)", marginTop: "40px", maxWidth: "680px" }}>
             <h3 style={{ fontFamily: "Georgia, serif", fontSize: "24px", marginBottom: "8px" }}>Join the Academy Waitlist</h3>
             <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: "28px" }}>
-              Be the first to access Teddy's educational products. Waitlist members get early-bird pricing and exclusive bonuses — including the free "5 Color Mistakes" guide instantly.
+              Be the first to access Beverly&apos;s Academy products. Waitlist members get early-bird pricing and exclusive bonuses — including the free &quot;5 Color Mistakes&quot; guide instantly.
             </p>
             <WaitlistForm />
           </div>

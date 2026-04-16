@@ -28,6 +28,12 @@ import Progress from "./pages/portal/Progress";
 
 // Products
 import MasterColoristsCheatSheet from "./pages/portal/products/MasterColoristsCheatSheet";
+import PricingProfitPlaybook from "./pages/portal/products/PricingProfitPlaybook";
+import SilkPressBlueprint from "./pages/portal/products/SilkPressBlueprint";
+import SalonOwnerPlaybook from "./pages/portal/products/SalonOwnerPlaybook";
+import WigConstructionCompanion from "./pages/portal/products/WigConstructionCompanion";
+import HairColorMasteryGuide from "./pages/portal/products/HairColorMasteryGuide";
+import ConsultationVault from "./pages/portal/products/ConsultationVault";
 
 // Tools
 import ColorFormulator from "./pages/portal/tools/ColorFormulator";
@@ -52,28 +58,28 @@ function Router() {
       {/* Portal — login required, admins bypass all paywalls */}
       <Route path="/portal">
         {() => (
-          <ProtectedRoute requireAuth>
+          <ProtectedRoute>
             <PortalHome />
           </ProtectedRoute>
         )}
       </Route>
       <Route path="/portal/library">
         {() => (
-          <ProtectedRoute requireAuth>
+          <ProtectedRoute>
             <Library />
           </ProtectedRoute>
         )}
       </Route>
       <Route path="/portal/progress">
         {() => (
-          <ProtectedRoute requireAuth>
+          <ProtectedRoute>
             <Progress />
           </ProtectedRoute>
         )}
       </Route>
       <Route path="/portal/account">
         {() => (
-          <ProtectedRoute requireAuth>
+          <ProtectedRoute>
             <Account />
           </ProtectedRoute>
         )}
@@ -82,8 +88,50 @@ function Router() {
       {/* Products */}
       <Route path="/portal/products/master-colorists-cheat-sheet">
         {() => (
-          <ProtectedRoute requireAuth requireProduct="master-colorists-cheat-sheet">
+          <ProtectedRoute requireProduct="master-colorists-cheat-sheet">
             <MasterColoristsCheatSheet />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/products/pricing-profit-playbook">
+        {() => (
+          <ProtectedRoute requireProduct="pricing-profit-playbook">
+            <PricingProfitPlaybook />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/products/silk-press-blueprint">
+        {() => (
+          <ProtectedRoute requireProduct="silk-press-blueprint">
+            <SilkPressBlueprint />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/products/salon-owners-launch-kit">
+        {() => (
+          <ProtectedRoute requireProduct="salon-owners-launch-kit">
+            <SalonOwnerPlaybook />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/products/wig-construction-companion">
+        {() => (
+          <ProtectedRoute requireProduct="wig-construction-companion">
+            <WigConstructionCompanion />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/products/hair-color-mastery-guide">
+        {() => (
+          <ProtectedRoute requireProduct="hair-color-mastery-guide">
+            <HairColorMasteryGuide />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/products/consultation-vault">
+        {() => (
+          <ProtectedRoute requireProduct="consultation-vault">
+            <ConsultationVault />
           </ProtectedRoute>
         )}
       </Route>

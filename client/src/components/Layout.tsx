@@ -41,8 +41,15 @@ export function Nav() {
     { href: "/#gallery", label: "Gallery" },
     { href: "/the-reveal", label: "The Reveal" },
     { href: "/academy", label: "Academy" },
+    /** Logged-out users hit /login first; signed-in users see the dashboard. */
+    { href: "/portal", label: "Member Portal", activePrefix: "/portal" },
     { href: "/blog", label: "Journal" },
   ];
+
+  const navItemActive = (link: (typeof navLinks)[number]) => {
+    if ("activePrefix" in link && link.activePrefix) return location.startsWith(link.activePrefix);
+    return location === link.href;
+  };
 
   return (
     <>
@@ -123,35 +130,36 @@ export function Nav() {
           transition: "all 0.3s ease",
           display: "flex", alignItems: "center"
         }}>
-        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {/* Logo — image from client/public/assets; links home */}
-          <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", lineHeight: 0 }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
+          {/* Logo — sits flush left with breathing room before nav links */}
+          <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", lineHeight: 0, flexShrink: 0, marginRight: "auto" }}>
             <img
               src="/assets/beverlys-logo.png"
               alt="Beverly's of Nashville logo"
               style={{
-                height: "42px",
+                height: "38px",
                 width: "auto",
-                maxWidth: "min(240px, 52vw)",
+                maxWidth: "min(200px, 44vw)",
                 objectFit: "contain",
                 display: "block",
               }}
             />
           </Link>
 
-          {/* Desktop nav links */}
-          <div style={{ display: "flex", alignItems: "center", gap: "32px" }} className="nav-desktop">
+          {/* Desktop nav links — pushed right, tighter spacing */}
+          <div style={{ display: "flex", alignItems: "center", gap: "22px" }} className="nav-desktop">
             {navLinks.map(link => (
               <a
                 key={link.href}
                 href={link.href}
                 style={{
-                  fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase",
-                  color: location === link.href ? "#C9A84C" : "rgba(255,255,255,0.7)",
-                  textDecoration: "none", transition: "color 0.2s"
+                  fontSize: "10px", letterSpacing: "1.5px", textTransform: "uppercase",
+                  color: navItemActive(link) ? "#C9A84C" : "rgba(255,255,255,0.7)",
+                  textDecoration: "none", transition: "color 0.2s",
+                  whiteSpace: "nowrap",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = "#C9A84C")}
-                onMouseLeave={e => (e.currentTarget.style.color = location === link.href ? "#C9A84C" : "rgba(255,255,255,0.7)")}
+                onMouseLeave={e => (e.currentTarget.style.color = navItemActive(link) ? "#C9A84C" : "rgba(255,255,255,0.7)")}
               >
                 {link.label}
               </a>
@@ -161,7 +169,7 @@ export function Nav() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold"
-              style={{ fontSize: "9px", padding: "10px 20px" }}
+              style={{ fontSize: "9px", padding: "10px 20px", whiteSpace: "nowrap", flexShrink: 0 }}
             >
               Book Now
             </a>
@@ -186,12 +194,13 @@ export function Nav() {
 
       {/* Mobile menu drawer */}
       <div style={{
-        position: "fixed", top: `${headerOffsetPx}px`, left: 0, right: 0, zIndex: 999,
+        position: "fixed", top: `${headerOffsetPx}px`, left: 0, right: 0, bottom: 0, zIndex: 999,
         background: "rgba(17,17,17,0.98)", backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(201,168,76,0.2)",
         padding: mobileOpen ? "24px 0 32px" : "0",
-        maxHeight: mobileOpen ? "500px" : "0",
-        overflow: "hidden",
+        maxHeight: mobileOpen ? "100dvh" : "0",
+        overflowY: "auto",
+        overflowX: "hidden",
         transition: "all 0.3s ease",
         display: "none"
       }} className="nav-mobile-drawer">
@@ -236,7 +245,7 @@ export function Footer() {
   return (
     <footer style={{ background: "#0a0a0a", borderTop: "1px solid rgba(201,168,76,0.15)", padding: "60px 0 32px" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "48px", marginBottom: "48px" }}>
+        <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "48px", marginBottom: "48px" }}>
           {/* Brand */}
           <div>
             <div style={{ marginBottom: "16px" }}>
@@ -314,6 +323,7 @@ export function Footer() {
             <div style={{ fontSize: "9px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "20px" }}>Academy</div>
             {[
               { href: "/academy", label: "The Academy" },
+              { href: "/portal", label: "Member Portal" },
               { href: "/academy#curriculum", label: "Curriculum" },
               { href: "/free-guide", label: "Free Color Guide" },
               { href: "/academy#waitlist", label: "Join Waitlist" },

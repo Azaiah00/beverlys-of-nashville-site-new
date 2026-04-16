@@ -28,10 +28,11 @@ export default function Pricing() {
     const tier = PRICING[tierKey];
     let priceId: string;
     if (tierKey === "artisan" && founding) {
+      const artisanTier = tier as typeof PRICING["artisan"];
       priceId =
         billing === "monthly"
-          ? tier.stripePriceIdFoundingMonthly!
-          : tier.stripePriceIdFoundingAnnual!;
+          ? artisanTier.stripePriceIdFoundingMonthly!
+          : artisanTier.stripePriceIdFoundingAnnual!;
     } else {
       priceId = billing === "monthly" ? tier.stripePriceIdMonthly : tier.stripePriceIdAnnual;
     }

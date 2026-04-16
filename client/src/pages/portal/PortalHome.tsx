@@ -11,7 +11,7 @@ const GOLD = "#C9A84C";
 const CHARCOAL = "#1A1A1A";
 
 export default function PortalHome() {
-  const { profile, user, tier, isAdmin, can } = useAuth();
+  const { profile, user, tier, isAdmin, portalDemoUnlock, isUnrestricted, can } = useAuth();
   const name = profile?.full_name?.split(" ")[0] || user?.email?.split("@")[0] || "there";
 
   const accessible = PRODUCTS.filter((p) => can(p.slug));
@@ -22,7 +22,7 @@ export default function PortalHome() {
       {/* Welcome Hero */}
       <div style={{ marginBottom: "48px" }}>
         <div style={{ fontSize: "11px", letterSpacing: "3px", color: GOLD, textTransform: "uppercase", marginBottom: "10px" }}>
-          {isAdmin ? "Admin Dashboard" : "Your Academy"}
+          {portalDemoUnlock && !isAdmin ? "Demo preview" : isAdmin ? "Admin Dashboard" : "Your Academy"}
         </div>
         <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(32px, 4vw, 46px)", margin: "0 0 12px", lineHeight: 1.15 }}>
           Welcome back, <em style={{ color: GOLD, fontStyle: "italic" }}>{name}.</em>
@@ -41,7 +41,11 @@ export default function PortalHome() {
           marginBottom: "48px",
         }}
       >
-        <Stat icon={<Sparkles size={20} color={GOLD} />} label="Current Tier" value={isAdmin ? "Admin" : tier.charAt(0).toUpperCase() + tier.slice(1)} />
+        <Stat
+          icon={<Sparkles size={20} color={GOLD} />}
+          label="Current Tier"
+          value={portalDemoUnlock && !isAdmin ? "Demo (unlocked)" : isAdmin ? "Admin" : tier.charAt(0).toUpperCase() + tier.slice(1)}
+        />
         <Stat icon={<PlayCircle size={20} color={GOLD} />} label="Unlocked" value={`${accessible.length} products`} />
         <Stat icon={<Trophy size={20} color={GOLD} />} label="Certificates" value="0" />
         <Stat icon={<ArrowUpRight size={20} color={GOLD} />} label="Streak" value="Day 1" />
@@ -67,7 +71,7 @@ export default function PortalHome() {
       </div>
 
       {/* Locked / upgrade tease */}
-      {locked.length > 0 && !isAdmin && (
+      {locked.length > 0 && !isUnrestricted && (
         <>
           <SectionHeader
             title="Unlock More"
