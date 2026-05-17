@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // Public site
 import Home from "./pages/Home";
+import Book from "./pages/Book";
 import Academy from "./pages/Academy";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -44,6 +45,7 @@ function Router() {
     <Switch>
       {/* Public site */}
       <Route path="/" component={Home} />
+      <Route path="/book" component={Book} />
       <Route path="/the-reveal" component={TheReveal} />
       <Route path="/academy" component={Academy} />
       <Route path="/blog" component={Blog} />
