@@ -43,6 +43,7 @@ const inputStyle: CSSProperties = {
 
 // ── Netlify contact form (registered via static form in index.html + this UI). ──
 function ContactForm() {
+  const [selectedService, setSelectedService] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,20 +121,37 @@ function ContactForm() {
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Phone</label>
         <input name="phone" type="tel" placeholder="(615) 555-1234" style={inputStyle} />
       </div>
-      <div style={{ marginBottom: "16px" }}>
-        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Service Interested In</label>
-        <select name="service" defaultValue="" style={inputStyle}>
-          <option value="">— Select —</option>
-          <option>Color</option>
-          <option>Cuts</option>
-          <option>Silk Press</option>
-          <option>Extensions</option>
-          <option>Custom Wig</option>
-          <option>Medical Wig / Cranial Prosthesis</option>
-          <option>The Reveal Session</option>
-          <option>The Academy</option>
-          <option>Other</option>
-        </select>
+      <div style={{ marginBottom: "20px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "12px" }}>Service Interested In</label>
+        <input type="hidden" name="service" value={selectedService} />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "8px" }}>
+          {["Color", "Cuts", "Silk Press", "Extensions", "Custom Wig", "Medical Wig", "The Reveal", "The Academy", "Other"].map((svc) => {
+            const selected = selectedService === svc;
+            return (
+              <button
+                key={svc}
+                type="button"
+                onClick={() => setSelectedService(svc)}
+                style={{
+                  padding: "12px 10px",
+                  background: selected ? "#C9A84C" : "rgba(255,255,255,0.04)",
+                  color: selected ? "#111" : "#F4F1EA",
+                  border: selected ? "1px solid #C9A84C" : "1px solid #2a2a2a",
+                  fontSize: "12px",
+                  fontFamily: "inherit",
+                  fontWeight: selected ? 700 : 500,
+                  letterSpacing: "0.5px",
+                  cursor: "pointer",
+                  borderRadius: 0,
+                  textAlign: "center",
+                  transition: "all 0.2s",
+                }}
+              >
+                {svc}
+              </button>
+            );
+          })}
+        </div>
       </div>
       <div style={{ marginBottom: "20px" }}>
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Message</label>
@@ -159,6 +177,20 @@ export default function Book() {
         {/* HERO */}
         <section className="bev-section" style={{ background: "#1a1a1a", padding: "96px 0 64px" }}>
           <div className="container" style={{ textAlign: "center" }}>
+            <img
+              src="/assets/teddy-styling-hero.jpg"
+              alt="Teddy Chisom — Master Stylist at Beverly's of Nashville"
+              className="fade-up"
+              style={{
+                width: "240px",
+                height: "240px",
+                objectFit: "cover",
+                margin: "0 auto 32px",
+                display: "block",
+                border: "1px solid rgba(201,168,76,0.45)",
+                boxShadow: "0 14px 44px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.4)",
+              }}
+            />
             <p className="eyebrow fade-up">Book a Service</p>
             <h1 className="section-title fade-up" style={{ marginBottom: "16px" }}>
               Reserve Your Chair with <em style={{ color: "#C9A84C", fontStyle: "italic" }}>Teddy</em>.
