@@ -1005,6 +1005,25 @@ function ContactForm() {
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Email</label>
         <input name="email" type="email" required placeholder="your@email.com" style={inputStyle} />
       </div>
+      <div style={{ marginBottom: "16px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Phone</label>
+        <input name="phone" type="tel" placeholder="(615) 555-1234" style={inputStyle} />
+      </div>
+      <div style={{ marginBottom: "16px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Service Interested In</label>
+        <select name="service" defaultValue="" style={inputStyle}>
+          <option value="">— Select —</option>
+          <option>Color</option>
+          <option>Cuts</option>
+          <option>Silk Press</option>
+          <option>Extensions</option>
+          <option>Custom Wig</option>
+          <option>Medical Wig / Cranial Prosthesis</option>
+          <option>The Reveal Session</option>
+          <option>The Academy</option>
+          <option>Other</option>
+        </select>
+      </div>
       <div style={{ marginBottom: "20px" }}>
         <label style={{ fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", display: "block", marginBottom: "8px" }}>Message</label>
         <textarea name="message" required rows={4} placeholder="How can we help?" style={{ ...inputStyle, resize: "vertical", minHeight: "100px" }} />
