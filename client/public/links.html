@@ -254,6 +254,22 @@
     margin: 0 auto;
   }
 
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-actions .btn-outline {
+    padding: 12px 24px;
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    background: rgba(201,168,76,0.06);
+  }
+  .hero-actions .btn-outline:hover {
+    background: rgba(201,168,76,0.14);
+  }
+
   /* ==================== SECTIONS ==================== */
   .section {
     padding: 52px 24px 44px;
@@ -568,9 +584,14 @@
       Three decades of master-level technique.
     </p>
 
-    <a class="btn hero-cta" href="https://beverlysofnashville.com/#contact" target="_blank" rel="noopener">
-      Book Your Appointment <span class="btn-arrow">&rarr;</span>
-    </a>
+    <div class="hero-actions">
+      <a class="btn hero-cta" href="https://beverlysofnashville.com/#contact" target="_blank" rel="noopener">
+        Book Your Appointment <span class="btn-arrow">&rarr;</span>
+      </a>
+      <a class="btn btn-outline" href="tel:+16154974215">
+        Or Call &nbsp;(615) 497-4215
+      </a>
+    </div>
   </header>
 
   <!-- =================== SECTION 1 · WIG BOUTIQUE (HIGH PRIORITY) =================== -->
