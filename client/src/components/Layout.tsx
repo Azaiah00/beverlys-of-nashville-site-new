@@ -165,7 +165,7 @@ export function Nav() {
               </a>
             ))}
             <a
-              href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville"
+              href="/#contact"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold"
@@ -221,7 +221,7 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville"
+            href="/#contact"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"
@@ -302,7 +302,7 @@ export function Footer() {
               { href: "/#gallery", label: "Gallery" },
               { href: "/#about", label: "About Teddy" },
               { href: "/#contact", label: "Contact" },
-              { href: "https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville", label: "Book Online", external: true },
+              { href: "/#contact", label: "Book Online", external: true },
             ].map(link => (
               <a
                 key={link.label}
