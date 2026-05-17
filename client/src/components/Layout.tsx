@@ -361,10 +361,10 @@ export function Footer() {
               onMouseEnter={e => (e.currentTarget.style.color = "#C9A84C")}
               onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
             >(615) 497-4215</a>
-            <a href="mailto:hello@beverlysofnashville.com" style={{ display: "block", fontSize: "12px", color: "rgba(255,255,255,0.35)", textDecoration: "none", marginBottom: "16px", transition: "color 0.2s", wordBreak: "break-all" }}
+            <a href="mailto:teddychisom1963@gmail.com" style={{ display: "block", fontSize: "12px", color: "rgba(255,255,255,0.35)", textDecoration: "none", marginBottom: "16px", transition: "color 0.2s", wordBreak: "break-all" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#C9A84C")}
               onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
-            >hello@beverlysofnashville.com</a>
+            >teddychisom1963@gmail.com</a>
             <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", lineHeight: 1.6 }}>
               Mon–Sat: 9:00 AM – 6:00 PM<br />Sun: By Appointment
             </div>
