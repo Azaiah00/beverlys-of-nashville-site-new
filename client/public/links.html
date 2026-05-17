@@ -144,17 +144,13 @@
   }
 
   .hero-image-wrap {
-    margin: 0 -24px 28px;
+    max-width: 300px;
+    margin: 0 auto 28px;
     background: #E8DFD0;
     position: relative;
     overflow: hidden;
-  }
-  .hero-image-wrap::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    box-shadow: inset 0 -80px 80px -40px rgba(17,17,17,0.55);
-    pointer-events: none;
+    border: 1px solid rgba(201,168,76,0.45);
+    box-shadow: 0 14px 44px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.4);
   }
   .hero-image {
     display: block;
