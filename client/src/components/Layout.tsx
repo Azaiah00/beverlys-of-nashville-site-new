@@ -344,7 +344,7 @@ export function Footer() {
           <div>
             <div style={{ fontSize: "9px", letterSpacing: "3px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "20px" }}>Contact</div>
             <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, marginBottom: "16px" }}>
-              3306 Nolensville Pike<br />Nashville, TN 37211
+              3304 Nolensville Pike<br />Nashville, TN 37211
             </div>
             <a href="tel:6154974215" style={{ display: "block", fontSize: "13px", color: "rgba(255,255,255,0.45)", textDecoration: "none", marginBottom: "8px", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#C9A84C")}
