@@ -160,7 +160,7 @@ function RevealSessionEstimator() {
   summaryLines.push(`Estimate total: $${total}`);
 
   const mailBody = encodeURIComponent(summaryLines.join("\n"));
-  const mailtoEstimate = `mailto:teddy@beverlysofnashville.com?subject=${encodeURIComponent("The Reveal Session — My estimate")}&body=${mailBody}`;
+  const mailtoEstimate = `mailto:teddychisom1963@gmail.com?subject=${encodeURIComponent("The Reveal Session — My estimate")}&body=${mailBody}`;
 
   return (
     <div
@@ -558,7 +558,7 @@ export default function Home() {
             <RevealSessionEstimator />
             <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "24px", marginBottom: "8px" }}>
               <a
-                href="mailto:teddy@beverlysofnashville.com?subject=The%20Reveal%20Session%20Booking"
+                href="mailto:teddychisom1963@gmail.com?subject=The%20Reveal%20Session%20Booking"
                 className="btn-gold"
               >
                 Book The Reveal →
@@ -858,7 +858,7 @@ export default function Home() {
               {[
                 { label: "Address", value: "3304 Nolensville Pike\nNashville, TN 37211" },
                 { label: "Phone / Text", value: "(615) 497-4215", href: "tel:6154974215" },
-                { label: "Email", value: "hello@beverlysofnashville.com", href: "mailto:hello@beverlysofnashville.com" },
+                { label: "Email", value: "teddychisom1963@gmail.com", href: "mailto:teddychisom1963@gmail.com" },
                 { label: "Hours", value: "Monday – Saturday: 9:00 AM – 6:00 PM\nSunday: By Appointment Only" },
               ].map(info => (
                 <div key={info.label} className="fade-up" style={{ marginBottom: "28px" }}>
