@@ -737,15 +737,15 @@ export default function Home() {
               Coming Soon
             </h3>
             <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.55)", lineHeight: 1.75, margin: 0 }}>
-              We&apos;re refreshing the gallery with new work. Follow @beverlysofnashville on Instagram for the latest transformations in the meantime.
+              We&apos;re refreshing the gallery with new work. Follow @the_hair_care_king on Instagram for the latest transformations in the meantime.
             </p>
           </div>
 
           <div className="fade-up" style={{ textAlign: "center", marginTop: "40px" }}>
             <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", marginBottom: "16px", letterSpacing: "1px" }}>
-              Follow @beverlysofnashville for daily transformations
+              Follow @the_hair_care_king for daily transformations
             </div>
-            <a href="https://instagram.com/bofnsalon" target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
+            <a href="https://www.instagram.com/the_hair_care_king" target="_blank" rel="noopener noreferrer" className="btn-outline-gold">
               View on Instagram
             </a>
           </div>
