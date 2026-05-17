@@ -856,7 +856,7 @@ export default function Home() {
           <div className="contact-grid">
             <div>
               {[
-                { label: "Address", value: "3306 Nolensville Pike\nNashville, TN 37211" },
+                { label: "Address", value: "3304 Nolensville Pike\nNashville, TN 37211" },
                 { label: "Phone / Text", value: "(615) 497-4215", href: "tel:6154974215" },
                 { label: "Email", value: "hello@beverlysofnashville.com", href: "mailto:hello@beverlysofnashville.com" },
                 { label: "Hours", value: "Monday – Saturday: 9:00 AM – 6:00 PM\nSunday: By Appointment Only" },
@@ -888,7 +888,7 @@ export default function Home() {
             <div className="fade-up">
               <div style={{ width: "100%", height: "400px", border: "1px solid rgba(201,168,76,0.2)", overflow: "hidden" }}>
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3225.456!2d-86.7455!3d36.0895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s3306+Nolensville+Pike+Nashville+TN+37211!5e0!3m2!1sen!2sus!4v1"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3225.456!2d-86.7455!3d36.0895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s3304+Nolensville+Pike+Nashville+TN+37211!5e0!3m2!1sen!2sus!4v1"
                   width="100%" height="400"
                   style={{ border: 0, filter: "grayscale(80%) invert(90%) contrast(90%)" }}
                   allowFullScreen
