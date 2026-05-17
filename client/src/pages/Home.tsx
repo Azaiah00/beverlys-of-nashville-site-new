@@ -337,7 +337,7 @@ export default function Home() {
             30+ years of master-level artistry in color, styling, and custom wigs. Led by Teddy Chisom — Nashville's most trusted hair artist.
           </p>
           <div className="fade-up" style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-            <a href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville" target="_blank" rel="noopener noreferrer" className="btn-gold">
+            <a href="/#contact" target="_blank" rel="noopener noreferrer" className="btn-gold">
               Book Your Appointment →
             </a>
             <a href="#services" className="btn-outline">Explore Services</a>
@@ -407,7 +407,7 @@ export default function Home() {
                 ))}
               </div>
               <div className="fade-up" style={{ marginTop: "32px", display: "flex", gap: "16px", flexWrap: "wrap" }}>
-                <a href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville" target="_blank" rel="noopener noreferrer" className="btn-gold">Book with Teddy</a>
+                <a href="/#contact" target="_blank" rel="noopener noreferrer" className="btn-gold">Book with Teddy</a>
                 <a href="/academy" className="btn-outline-gold">Explore The Academy</a>
               </div>
             </div>
@@ -499,7 +499,7 @@ export default function Home() {
           </div>
 
           <div className="fade-up" style={{ textAlign: "center", marginTop: "48px" }}>
-            <a href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville" target="_blank" rel="noopener noreferrer" className="btn-gold">
+            <a href="/#contact" target="_blank" rel="noopener noreferrer" className="btn-gold">
               Book Your Service
             </a>
             <span style={{ display: "inline-block", width: "16px" }} />
@@ -703,7 +703,7 @@ export default function Home() {
           </div>
 
           <div className="fade-up" style={{ textAlign: "center", marginTop: "40px" }}>
-            <a href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville" target="_blank" rel="noopener noreferrer" className="btn-gold">
+            <a href="/#contact" target="_blank" rel="noopener noreferrer" className="btn-gold">
               Schedule a Wig Consultation
             </a>
             <span style={{ display: "inline-block", width: "16px" }} />
@@ -871,7 +871,7 @@ export default function Home() {
                 </div>
               ))}
               <div className="fade-up" style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "24px" }}>
-                <a href="https://booksy.com/en-us/899079_beverlys-of-nashville_hair-salon_15_nashville" target="_blank" rel="noopener noreferrer" className="btn-gold">
+                <a href="/#contact" target="_blank" rel="noopener noreferrer" className="btn-gold">
                   Book Online via Booksy
                 </a>
                 <a href="tel:6154974215" className="btn-outline">Call or Text</a>
