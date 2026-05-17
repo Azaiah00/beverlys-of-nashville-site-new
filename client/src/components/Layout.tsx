@@ -230,8 +230,8 @@ export function Nav() {
             Book Your Appointment
           </a>
           <div style={{ marginTop: "20px", display: "flex", gap: "20px", justifyContent: "center" }}>
-            <a href="https://instagram.com/bofnsalon" target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Instagram</a>
-            <a href="https://www.facebook.com/bofnsalon" target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Facebook</a>
+            <a href="https://www.instagram.com/the_hair_care_king" target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Instagram</a>
+            <a href="https://www.facebook.com/theodore.chisom" target="_blank" rel="noopener noreferrer" style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Facebook</a>
             <a href="tel:6154974215" style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#C9A84C", textDecoration: "none" }}>(615) 497-4215</a>
           </div>
         </div>
@@ -266,29 +266,40 @@ export function Footer() {
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, maxWidth: "260px", marginBottom: "20px" }}>
               Nashville's premier hair salon. 30+ years of master-level artistry in color, styling, and custom wigs. Led by Teddy Chisom.
             </p>
-            <div style={{ display: "flex", gap: "12px" }}>
-              {[
-                { href: "https://instagram.com/bofnsalon", label: "IG" },
-                { href: "https://www.facebook.com/bofnsalon", label: "FB" },
-                { href: "https://tiktok.com/@beverlysofnashville", label: "TK" },
-              ].map(s => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    width: "36px", height: "36px", border: "1px solid rgba(201,168,76,0.3)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "9px", letterSpacing: "1px", color: "#C9A84C", textDecoration: "none",
-                    transition: "all 0.2s"
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "#C9A84C"; e.currentTarget.style.color = "#111"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#C9A84C"; }}
-                >
-                  {s.label}
-                </a>
-              ))}
+            <div>
+              <div style={{ fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: "#C9A84C", marginBottom: "12px", fontWeight: 600 }}>Follow Teddy</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {[
+                  { href: "https://www.instagram.com/the_hair_care_king", label: "IG", handle: "@the_hair_care_king" },
+                  { href: "https://www.tiktok.com/@thehaircareking", label: "TT", handle: "@thehaircareking" },
+                  { href: "https://www.facebook.com/theodore.chisom", label: "FB", handle: "Theodore Chisom Jr." },
+                ].map(s => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "flex", alignItems: "center", gap: "12px",
+                      padding: "8px 14px",
+                      border: "1px solid rgba(201,168,76,0.3)",
+                      color: "rgba(255,255,255,0.75)",
+                      textDecoration: "none",
+                      fontSize: "12px", letterSpacing: "1.5px", textTransform: "uppercase",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#C9A84C"; e.currentTarget.style.color = "#F4F1EA"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(201,168,76,0.3)"; e.currentTarget.style.color = "rgba(255,255,255,0.75)"; }}
+                  >
+                    <span style={{
+                      width: "26px", height: "26px", background: "#C9A84C", color: "#111",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: "10px", fontWeight: 700, letterSpacing: "1px"
+                    }}>{s.label}</span>
+                    <span style={{ fontSize: "11px", textTransform: "none", letterSpacing: "0.5px" }}>{s.handle}</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
