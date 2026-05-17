@@ -165,7 +165,7 @@ export function Nav() {
               </a>
             ))}
             <a
-              href="/#contact"
+              href="/book"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold"
@@ -221,7 +221,7 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="/#contact"
+            href="/book"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"
@@ -301,8 +301,8 @@ export function Footer() {
               { href: "/#wigs", label: "Wig Boutique" },
               { href: "/#gallery", label: "Gallery" },
               { href: "/#about", label: "About Teddy" },
-              { href: "/#contact", label: "Contact" },
-              { href: "/#contact", label: "Book Online", external: true },
+              { href: "/book", label: "Contact" },
+              { href: "/book", label: "Book Online", external: true },
             ].map(link => (
               <a
                 key={link.label}
