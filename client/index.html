@@ -42,6 +42,12 @@
       <textarea name="message"></textarea>
       <input type="text" name="bot-field" />
     </form>
+    <!-- Static form so Netlify detects /free-guide submissions at build time. JS POSTs from the React app at runtime. -->
+    <form name="free-guide" netlify hidden>
+      <input type="text" name="first_name" />
+      <input type="email" name="email_address" />
+      <input type="text" name="source" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <!-- Umami: uncomment and set VITE_ANALYTICS_ENDPOINT + VITE_ANALYTICS_WEBSITE_ID in .env (see Vite HTML env substitution). -->
