@@ -238,7 +238,7 @@ export default function Academy() {
                 detail: "3-month private coaching program for salon owners",
                 price: "",
                 badge: "Applications Open",
-                ctas: [{ label: "Apply Now →", href: "mailto:teddy@beverlysofnashville.com", variant: "gold" as const }],
+                ctas: [{ label: "Apply Now →", href: "mailto:teddychisom1963@gmail.com", variant: "gold" as const }],
               },
             ].map((row) => (
               <div

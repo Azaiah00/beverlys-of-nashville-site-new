@@ -25,7 +25,7 @@ const PHOTOS = {
 };
 
 const BOOK_MAILTO =
-  "mailto:teddy@beverlysofnashville.com?subject=The%20Reveal%20Session%20Booking";
+  "mailto:teddychisom1963@gmail.com?subject=The%20Reveal%20Session%20Booking";
 
 function useFadeUp() {
   useEffect(() => {
