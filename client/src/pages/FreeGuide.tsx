@@ -8,15 +8,20 @@ import { BadgeCheck } from "lucide-react";
 import { BevListCheck } from "@/components/BevLucide";
 import { Nav, Footer } from "@/components/Layout";
 
-/** Replace when Kit is configured — free PDF opt-in posts to this Kit form. */
-const KIT_FORM_ID_FREEGUIDE = "KIT_FORM_ID_FREEGUIDE";
-
-async function postKitFreeGuideSubscription(payload: Record<string, unknown>) {
-  const url = `https://app.kit.com/forms/${KIT_FORM_ID_FREEGUIDE}/subscriptions`;
-  return fetch(url, {
+/** Bridges /free-guide submissions to Netlify Forms until Kit is live.
+ * Frederick can export captured submissions from Netlify dashboard → Forms tab,
+ * then bulk-import them into Kit once the account is set up. */
+async function postKitFreeGuideSubscription(payload: Record<string, string>) {
+  const body = new URLSearchParams({
+    "form-name": "free-guide",
+    first_name: payload.first_name || "",
+    email_address: payload.email_address || "",
+    source: payload.tags || "free-guide",
+  }).toString();
+  return fetch("/", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
   });
 }
 
