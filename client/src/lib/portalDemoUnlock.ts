@@ -9,3 +9,14 @@
 export function isPortalDemoUnlock(): boolean {
   return import.meta.env.VITE_PORTAL_DEMO_UNLOCK === "true";
 }
+
+/**
+ * Temporary member-preview mode.
+ *
+ * Netlify Edge protects every /portal route with a server-side passcode cookie.
+ * Once that gate succeeds, this flag unlocks the existing course UI without
+ * requiring unfinished Supabase/Stripe member accounts.
+ */
+export function isAcademyPasscodeMode(): boolean {
+  return import.meta.env.VITE_ACADEMY_PASSCODE_MODE === "true";
+}

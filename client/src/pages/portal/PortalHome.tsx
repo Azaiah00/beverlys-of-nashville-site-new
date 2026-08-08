@@ -11,7 +11,7 @@ const GOLD = "#C9A84C";
 const CHARCOAL = "#1A1A1A";
 
 export default function PortalHome() {
-  const { profile, user, tier, isAdmin, portalDemoUnlock, isUnrestricted, can } = useAuth();
+  const { profile, user, tier, isAdmin, portalDemoUnlock, academyPasscodeMode, isUnrestricted, can } = useAuth();
   const name = profile?.full_name?.split(" ")[0] || user?.email?.split("@")[0] || "there";
 
   const accessible = PRODUCTS.filter((p) => can(p.slug));
@@ -22,7 +22,13 @@ export default function PortalHome() {
       {/* Welcome Hero */}
       <div style={{ marginBottom: "48px" }}>
         <div style={{ fontSize: "11px", letterSpacing: "3px", color: GOLD, textTransform: "uppercase", marginBottom: "10px" }}>
-          {portalDemoUnlock && !isAdmin ? "Demo preview" : isAdmin ? "Admin Dashboard" : "Your Academy"}
+          {academyPasscodeMode && !isAdmin
+            ? "Member dashboard"
+            : portalDemoUnlock && !isAdmin
+              ? "Demo preview"
+              : isAdmin
+                ? "Admin Dashboard"
+                : "Your Academy"}
         </div>
         <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(32px, 4vw, 46px)", margin: "0 0 12px", lineHeight: 1.15 }}>
           Welcome back, <em style={{ color: GOLD, fontStyle: "italic" }}>{name}.</em>
@@ -44,7 +50,15 @@ export default function PortalHome() {
         <Stat
           icon={<Sparkles size={20} color={GOLD} />}
           label="Current Tier"
-          value={portalDemoUnlock && !isAdmin ? "Demo (unlocked)" : isAdmin ? "Admin" : tier.charAt(0).toUpperCase() + tier.slice(1)}
+          value={
+            academyPasscodeMode && !isAdmin
+              ? "Member access"
+              : portalDemoUnlock && !isAdmin
+                ? "Demo (unlocked)"
+                : isAdmin
+                  ? "Admin"
+                  : tier.charAt(0).toUpperCase() + tier.slice(1)
+          }
         />
         <Stat icon={<PlayCircle size={20} color={GOLD} />} label="Unlocked" value={`${accessible.length} products`} />
         <Stat icon={<Trophy size={20} color={GOLD} />} label="Certificates" value="0" />
@@ -57,6 +71,7 @@ export default function PortalHome() {
         {accessible.slice(0, 3).map((p) => (
           <Link key={p.slug} href={p.path}>
             <div style={productCard(false)}>
+              {p.thumbnail && <ProductCover src={p.thumbnail} title={p.title} />}
               <div style={{ fontSize: "10px", letterSpacing: "2px", color: GOLD, textTransform: "uppercase", marginBottom: "8px" }}>
                 {p.category}
               </div>
@@ -81,6 +96,7 @@ export default function PortalHome() {
             {locked.slice(0, 3).map((p) => (
               <Link key={p.slug} href="/pricing">
                 <div style={productCard(true)}>
+                  {p.thumbnail && <ProductCover src={p.thumbnail} title={p.title} locked />}
                   <Lock size={18} color={GOLD} style={{ position: "absolute", top: "16px", right: "16px" }} />
                   <div style={{ fontSize: "10px", letterSpacing: "2px", color: GOLD, textTransform: "uppercase", marginBottom: "8px" }}>
                     Requires {p.requiredTier}
@@ -154,6 +170,26 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
     <div style={{ marginBottom: "20px" }}>
       <h2 style={{ fontFamily: "Georgia, serif", fontSize: "26px", margin: "0 0 4px" }}>{title}</h2>
       <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>{subtitle}</p>
+    </div>
+  );
+}
+
+function ProductCover({ src, title, locked = false }: { src: string; title: string; locked?: boolean }) {
+  return (
+    <div style={{ height: "260px", margin: "-24px -24px 22px", overflow: "hidden", borderRadius: "8px 8px 0 0", background: "#0b0b0b" }}>
+      <img
+        src={src}
+        alt={`${title} cover`}
+        loading="lazy"
+        style={{
+          display: "block",
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition: "center top",
+          filter: locked ? "grayscale(.3) brightness(.62)" : "none",
+        }}
+      />
     </div>
   );
 }

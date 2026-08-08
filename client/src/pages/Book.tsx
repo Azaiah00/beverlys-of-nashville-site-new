@@ -2,11 +2,11 @@
  * Beverly's of Nashville — Book a Service Page (/book)
  * Dedicated booking funnel: hero → contact form → what-to-expect.
  * Form shares the same Netlify "contact" name as Home.tsx — submissions
- * email both teddychisom1963@gmail.com and hello@couturehouse.co.
+ * Notification recipients are configured in the Netlify project dashboard.
  */
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { Calendar, MessageCircle, Sparkles } from "lucide-react";
+import { BadgeCheck, Calendar, MessageCircle, Sparkles } from "lucide-react";
 import { Nav, Footer } from "@/components/Layout";
 
 function useFadeUp() {
@@ -55,17 +55,22 @@ function ContactForm() {
     const email = String(fd.get("email") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
     const botField = String(fd.get("bot-field") ?? "").trim();
+    const phone = String(fd.get("phone") ?? "").trim();
+    const service = String(fd.get("service") ?? "").trim();
     if (botField) return;
 
     const body = new URLSearchParams();
     body.append("form-name", "contact");
+    body.append("bot-field", "");
     body.append("name", name);
     body.append("email", email);
+    body.append("phone", phone);
+    body.append("service", service);
     body.append("message", message);
 
     setStatus("submitting");
     try {
-      const res = await fetch("/", {
+      const res = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),

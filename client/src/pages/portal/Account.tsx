@@ -10,7 +10,7 @@ const GOLD = "#C9A84C";
 const CHARCOAL = "#1A1A1A";
 
 export default function Account() {
-  const { user, profile, subscription, tier, isAdmin, portalDemoUnlock } = useAuth();
+  const { user, profile, subscription, tier, isAdmin, portalDemoUnlock, academyPasscodeMode } = useAuth();
 
   const openStripePortal = async () => {
     if (!user?.id) return;
@@ -37,13 +37,21 @@ export default function Account() {
         <Row
           icon={<Mail size={18} color={GOLD} />}
           label="Email"
-          value={portalDemoUnlock && !user ? "— (demo: not signed in)" : user?.email ?? "—"}
+          value={
+            academyPasscodeMode && !user
+              ? "Shared member preview"
+              : portalDemoUnlock && !user
+                ? "Demo preview"
+                : user?.email ?? "—"
+          }
         />
         <Row
           icon={<Shield size={18} color={GOLD} />}
           label="Role"
           value={
-            portalDemoUnlock && !isAdmin
+            academyPasscodeMode && !isAdmin
+              ? "Member access — all Academy content"
+              : portalDemoUnlock && !isAdmin
               ? "Demo — portal unlocked locally"
               : isAdmin
                 ? "Admin (all tiers unlocked)"
@@ -55,7 +63,12 @@ export default function Account() {
 
       {/* Subscription card */}
       <Card title="Subscription & Billing">
-        {portalDemoUnlock && !user ? (
+        {academyPasscodeMode && !user ? (
+          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>
+            This is a temporary passcode session for reviewing the Academy. Individual member accounts,
+            purchases, and billing will appear here when enrollment opens.
+          </p>
+        ) : portalDemoUnlock && !user ? (
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)" }}>
             Billing is hidden during the demo walkthrough. Turn off <code style={{ color: GOLD }}>VITE_PORTAL_DEMO_UNLOCK</code> and sign in to test Stripe / subscriptions.
           </p>

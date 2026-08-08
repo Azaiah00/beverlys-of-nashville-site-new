@@ -82,7 +82,24 @@ export default function Library() {
                   transition: "all .2s",
                 }}
               >
-                <div style={{ position: "absolute", top: "16px", right: "16px" }}>
+                {p.thumbnail && (
+                  <div style={{ height: "290px", margin: "-24px -24px 22px", overflow: "hidden", borderRadius: "8px 8px 0 0", background: "#0b0b0b" }}>
+                    <img
+                      src={p.thumbnail}
+                      alt={`${p.title} cover`}
+                      loading="lazy"
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center top",
+                        filter: unlocked ? "none" : "grayscale(.3) brightness(.62)",
+                      }}
+                    />
+                  </div>
+                )}
+                <div style={{ position: "absolute", top: "16px", right: "16px", width: "34px", height: "34px", display: "grid", placeItems: "center", borderRadius: "50%", background: "rgba(8,8,8,.82)" }}>
                   {unlocked ? <Unlock size={16} color={GOLD} /> : <Lock size={16} color={GOLD} />}
                 </div>
                 <div

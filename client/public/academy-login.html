@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Member Access | The Hair Care King Academy</title>
+  <meta name="description" content="Private member access for The Hair Care King Academy.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <link rel="icon" href="./assets/beverlys-logo-official.png" type="image/png">
+  <meta name="theme-color" content="#111111">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./pages.css">
+</head>
+<body class="academy-login-page">
+  <a class="skip-link" href="#main">Skip to access form</a>
+  <header class="academy-login-header">
+    <a href="./academy.html"><img src="./assets/beverlys-logo-official.png" width="488" height="161" alt="Beverly's of Nashville"></a>
+    <a class="text-link text-link-gold" href="./academy.html">Back to Academy <span aria-hidden="true">&larr;</span></a>
+  </header>
+  <main id="main" class="academy-login-main">
+    <section class="academy-login-panel">
+      <div class="academy-login-mark" aria-hidden="true">B</div>
+      <p class="eyebrow">Private member access</p>
+      <h1>Enter the<br><em>Academy.</em></h1>
+      <p>This portal is currently available by invitation. Enter the temporary member passcode to continue.</p>
+      <p class="academy-login-error" data-access-error hidden>The passcode was not recognized. Check it and try again.</p>
+      <form action="/academy-access" method="POST" class="academy-passcode-form">
+        <input type="hidden" name="next" value="/portal" data-next-field>
+        <label for="academy-passcode">Member passcode</label>
+        <input id="academy-passcode" name="passcode" type="password" required autocomplete="current-password" autofocus>
+        <button class="button button-gold" type="submit">Unlock member portal</button>
+      </form>
+      <small>Need access? Contact Teddy or the Couture House Co. website team.</small>
+    </section>
+  </main>
+  <script>
+    const accessParams = new URLSearchParams(window.location.search);
+    const nextField = document.querySelector('[data-next-field]');
+    const requestedNext = accessParams.get('next');
+    if (nextField && requestedNext && requestedNext.startsWith('/portal')) nextField.value = requestedNext;
+    if (accessParams.get('error') === '1') document.querySelector('[data-access-error]')?.removeAttribute('hidden');
+  </script>
+</body>
+</html>

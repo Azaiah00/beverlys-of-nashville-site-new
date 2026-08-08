@@ -5,6 +5,100 @@ publish = "dist/public"
 
 [build.environment]
 NODE_VERSION = "20"
+VITE_ACADEMY_PASSCODE_MODE = "true"
+
+# Crawlable editorial salon site. The deeper portal application routes remain
+# available through the SPA catch-all for future development.
+[[redirects]]
+from = "/"
+to = "/home.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/book"
+to = "/contact.html"
+status = 200
+
+[[redirects]]
+from = "/wigs"
+to = "/custom-wigs.html"
+status = 200
+
+[[redirects]]
+from = "/custom-wigs"
+to = "/custom-wigs.html"
+status = 200
+
+[[redirects]]
+from = "/services"
+to = "/services.html"
+status = 200
+
+[[redirects]]
+from = "/gallery"
+to = "/#work"
+status = 302
+
+[[redirects]]
+from = "/about"
+to = "/about.html"
+status = 200
+
+[[redirects]]
+from = "/contact"
+to = "/contact.html"
+status = 200
+
+[[redirects]]
+from = "/the-reveal"
+to = "/the-reveal.html"
+status = 200
+
+[[redirects]]
+from = "/blog"
+to = "/journal.html"
+status = 200
+
+[[redirects]]
+from = "/journal"
+to = "/journal.html"
+status = 200
+
+[[redirects]]
+from = "/academy"
+to = "/academy.html"
+status = 200
+
+[[redirects]]
+from = "/academy-login"
+to = "/academy-login.html"
+status = 200
+
+[[redirects]]
+from = "/portal"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/portal/*"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/free-guide"
+to = "/free-guide.html"
+status = 200
+
+[[redirects]]
+from = "/blog/wigs-for-cancer-patients-nashville"
+to = "/blog-wigs-cancer-nashville.html"
+status = 200
+
+[[redirects]]
+from = "/blog/color-mistakes-stylists-make"
+to = "/blog-color-mistakes-stylists.html"
+status = 200
 
 # Static link-in-bio page (must come BEFORE the SPA catch-all)
 [[redirects]]
@@ -12,8 +106,84 @@ from = "/links"
 to = "/links.html"
 status = 200
 
+[[redirects]]
+from = "/privacy"
+to = "/privacy.html"
+status = 200
+
+[[redirects]]
+from = "/terms"
+to = "/terms.html"
+status = 200
+
+[[redirects]]
+from = "/accessibility"
+to = "/accessibility.html"
+status = 200
+
 # SPA: send all routes to index.html for client-side routing (wouter)
 [[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
+
+[[edge_functions]]
+function = "academy-access"
+path = "/academy-access"
+
+[[edge_functions]]
+function = "academy-access"
+path = "/academy-logout"
+
+[[edge_functions]]
+function = "academy-guard"
+path = "/portal"
+
+[[edge_functions]]
+function = "academy-guard"
+path = "/portal/*"
+
+[[edge_functions]]
+function = "academy-guard"
+path = "/portal.html"
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "SAMEORIGIN"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+for = "/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Keep in-development and post-submit pages out of search until they are ready.
+[[headers]]
+for = "/free-guide*"
+[headers.values]
+X-Robots-Tag = "noindex, follow"
+
+[[headers]]
+for = "/academy-login*"
+[headers.values]
+X-Robots-Tag = "noindex, nofollow"
+Cache-Control = "no-store"
+
+[[headers]]
+for = "/portal*"
+[headers.values]
+X-Robots-Tag = "noindex, follow"
+
+[[headers]]
+for = "/thanks*"
+[headers.values]
+X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/__forms.html"
+[headers.values]
+X-Robots-Tag = "noindex, nofollow"
+Cache-Control = "no-store"

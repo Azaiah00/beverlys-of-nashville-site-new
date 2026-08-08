@@ -376,6 +376,22 @@ export function Footer() {
           <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)" }}>
             © {new Date().getFullYear()} Beverly's of Nashville Salon. All rights reserved.
           </div>
+          <a
+            href="https://www.couturehouse.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: "11px",
+              color: "rgba(255,255,255,0.35)",
+              letterSpacing: "0.5px",
+              textDecoration: "none",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = "#C9A84C")}
+            onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
+          >
+            Designed &amp; built by Couture House Co.
+          </a>
           <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)", letterSpacing: "1px" }}>
             Salon only · Not affiliated with the barbershop
           </div>

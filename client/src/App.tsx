@@ -26,6 +26,7 @@ import PortalHome from "./pages/portal/PortalHome";
 import Library from "./pages/portal/Library";
 import Account from "./pages/portal/Account";
 import Progress from "./pages/portal/Progress";
+import Tools from "./pages/portal/Tools";
 
 // Products
 import MasterColoristsCheatSheet from "./pages/portal/products/MasterColoristsCheatSheet";
@@ -76,6 +77,13 @@ function Router() {
         {() => (
           <ProtectedRoute>
             <Progress />
+          </ProtectedRoute>
+        )}
+      </Route>
+      <Route path="/portal/tools">
+        {() => (
+          <ProtectedRoute>
+            <Tools />
           </ProtectedRoute>
         )}
       </Route>

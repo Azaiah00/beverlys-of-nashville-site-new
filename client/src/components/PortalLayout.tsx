@@ -35,12 +35,16 @@ const navItems = [
 ];
 
 export default function PortalLayout({ children }: { children: ReactNode }) {
-  const { user, profile, tier, isAdmin, portalDemoUnlock, isUnrestricted, signOut } = useAuth();
+  const { user, profile, tier, isAdmin, portalDemoUnlock, academyPasscodeMode, isUnrestricted, signOut } = useAuth();
   const [location] = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const displayName =
-    portalDemoUnlock && !user ? "Demo walkthrough" : profile?.full_name || user?.email?.split("@")[0] || "Member";
+    academyPasscodeMode && !user
+      ? "Academy member"
+      : portalDemoUnlock && !user
+        ? "Demo walkthrough"
+        : profile?.full_name || user?.email?.split("@")[0] || "Member";
   const tierLabel = tier === "free" ? "Free" : tier.charAt(0).toUpperCase() + tier.slice(1);
 
   const isActive = (path: string, exact: boolean | undefined) =>
@@ -122,7 +126,11 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
             gap: "6px",
           }}
         >
-          {portalDemoUnlock && !isAdmin ? (
+          {academyPasscodeMode && !isAdmin ? (
+            <>
+              <Sparkles size={12} strokeWidth={2.5} /> Member access · all unlocked
+            </>
+          ) : portalDemoUnlock && !isAdmin ? (
             <>
               <Sparkles size={12} strokeWidth={2.5} /> Demo — all unlocked
             </>
@@ -195,7 +203,11 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "16px" }}>
           <div style={{ fontSize: "13px", color: "#fff", marginBottom: "2px", fontWeight: 600 }}>{displayName}</div>
           <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", marginBottom: "16px", wordBreak: "break-all" }}>
-            {portalDemoUnlock && !user ? "VITE_PORTAL_DEMO_UNLOCK=true — no sign-in" : user?.email}
+            {academyPasscodeMode && !user
+              ? "Temporary passcode session"
+              : portalDemoUnlock && !user
+                ? "Demo preview · no sign-in"
+                : user?.email}
           </div>
           
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -243,12 +255,51 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
               >
                 <LogOut size={14} /> Sign out
               </button>
+            ) : academyPasscodeMode ? (
+              <a
+                href="/academy-logout"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "8px 12px",
+                  background: "transparent",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "rgba(255,255,255,0.7)",
+                  fontSize: "12px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  width: "100%",
+                  justifyContent: "center",
+                  textDecoration: "none",
+                  boxSizing: "border-box",
+                }}
+              >
+                <LogOut size={14} /> Lock portal
+              </a>
             ) : (
               <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)", lineHeight: 1.5, textAlign: "center" }}>
-                Remove demo flag from <code style={{ color: GOLD }}>.env.local</code> to require login again.
+                Academy member sign-in is coming soon.
               </div>
             )}
           </div>
+          <a
+            href="https://www.couturehouse.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "block",
+              marginTop: "14px",
+              color: "rgba(255,255,255,0.32)",
+              fontSize: "10px",
+              lineHeight: 1.5,
+              textAlign: "center",
+              textDecoration: "none",
+              letterSpacing: "0.35px",
+            }}
+          >
+            Designed &amp; built by Couture House Co.
+          </a>
         </div>
       </aside>
 
@@ -315,7 +366,7 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
             display: block !important;
           }
           main {
-            padding: 24px 16px 60px !important;
+            padding: 84px 16px 60px !important;
           }
         }
       `}</style>

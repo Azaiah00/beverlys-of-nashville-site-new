@@ -1,184 +1,103 @@
 <!doctype html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Beverly's of Nashville | Full Service Salon by Teddy Chisom</title>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Beverly's of Nashville | Teddy Chisom, The Hair Care King</title>
+    <meta name="description" content="Beverly's of Nashville is the home of Teddy Chisom, The Hair Care King: a Nashville hairstylist specializing in master color, healthy-hair styling, and custom wigs." />
+    <meta name="theme-color" content="#111111" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Teddy Chisom — The Hair Care King" />
+    <meta property="og:description" content="Master color. Custom wigs. Healthy-hair artistry in Nashville." />
+    <meta property="og:image" content="https://beverlysofnashville.com/assets/teddy-hair-care-king-warm.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Google Analytics 4 — replace GA_MEASUREMENT_ID with your real measurement ID. -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-
-    <!-- Meta Pixel — replace META_PIXEL_ID with your real pixel ID. -->
-    <script>
-      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
-      (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', 'META_PIXEL_ID');
-      fbq('track', 'PageView');
-    </script>
-  
-    <!-- LocalBusiness / HairSalon schema for SEO + Google Knowledge Graph eligibility.
-         Note: openingHours intentionally omitted — Teddy to confirm and add when set. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "HairSalon",
-      "@id": "https://beverlysofnashville.com/#salon",
-      "name": "Beverly's of Nashville",
-      "alternateName": "Beverly's of Nashville Salon & Custom Wig Boutique",
-      "description": "Full-service hair salon and custom wig boutique in Nashville, TN. Master stylist Teddy Chisom — 30+ years of color, silk press, cuts, extensions, and custom human-hair wigs including medical/cranial prostheses.",
-      "url": "https://beverlysofnashville.com",
-      "telephone": "+1-615-497-4215",
-      "email": "teddychisom1963@gmail.com",
-      "priceRange": "$$",
-      "image": [
-        "https://beverlysofnashville.com/assets/teddy-artist-behind-chair.png",
-        "https://beverlysofnashville.com/assets/teddy-styling-hero.jpg"
-      ],
-      "logo": "https://beverlysofnashville.com/assets/teddy-artist-behind-chair.png",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "3304 Nolensville Pike",
-        "addressLocality": "Nashville",
-        "addressRegion": "TN",
-        "postalCode": "37211",
-        "addressCountry": "US"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 36.0793,
-        "longitude": -86.7434
-      },
-      "areaServed": [
+      "@graph": [
         {
-          "@type": "City",
-          "name": "Nashville"
+          "@type": "Person",
+          "@id": "https://beverlysofnashville.com/#teddy-chisom",
+          "name": "Theodore Chisom Jr.",
+          "alternateName": ["Teddy Chisom", "The Hair Care King"],
+          "jobTitle": "Hairstylist and Master Colorist",
+          "url": "https://beverlysofnashville.com/",
+          "image": "https://beverlysofnashville.com/assets/teddy-hair-care-king-warm.webp",
+          "worksFor": {"@id": "https://beverlysofnashville.com/#salon"},
+          "knowsAbout": ["Hair color", "Custom wigs", "Silk press", "Textured hair", "Precision haircuts"],
+          "sameAs": [
+            "https://www.instagram.com/the_hair_care_king",
+            "https://www.tiktok.com/@thehaircareking",
+            "https://www.facebook.com/theodore.chisom"
+          ]
         },
         {
-          "@type": "AdministrativeArea",
-          "name": "Davidson County, TN"
-        }
-      ],
-      "founder": {
-        "@type": "Person",
-        "name": "Beverly Epps"
-      },
-      "foundingDate": "1994",
-      "employee": {
-        "@type": "Person",
-        "name": "Teddy Chisom",
-        "jobTitle": "Owner & Master Colorist",
-        "knowsAbout": [
-          "Hair color",
-          "Custom wigs",
-          "Cranial prostheses",
-          "Silk press",
-          "Hair extensions"
-        ]
-      },
-      "sameAs": [
-        "https://www.instagram.com/the_hair_care_king",
-        "https://www.tiktok.com/@thehaircareking",
-        "https://www.facebook.com/theodore.chisom"
-      ],
-      "makesOffer": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Hair Color & Highlights"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Silk Press"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Custom Cuts"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Hair Extensions"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Custom Human Hair Wigs"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Medical Wigs & Cranial Prostheses (insurance-eligible)"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "The Reveal Session — Hair, Makeup & Photography"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "EducationalOccupationalProgram",
-            "name": "Beverly's Academy — Stylist Education"
-          }
+          "@type": "HairSalon",
+          "@id": "https://beverlysofnashville.com/#salon",
+          "name": "Beverly's of Nashville",
+          "url": "https://beverlysofnashville.com/",
+          "telephone": "+1-615-497-4215",
+          "email": "teddychisom1963@gmail.com",
+          "image": "https://beverlysofnashville.com/assets/teddy-hair-care-king-warm.webp",
+          "employee": {"@id": "https://beverlysofnashville.com/#teddy-chisom"},
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "3304 Nolensville Pike",
+            "addressLocality": "Nashville",
+            "addressRegion": "TN",
+            "postalCode": "37211",
+            "addressCountry": "US"
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              "opens": "09:00",
+              "closes": "18:00"
+            }
+          ],
+          "areaServed": "Nashville, Tennessee",
+          "priceRange": "$$-$$$",
+          "sameAs": [
+            "https://www.instagram.com/the_hair_care_king",
+            "https://www.tiktok.com/@thehaircareking",
+            "https://www.facebook.com/theodore.chisom"
+          ]
         }
       ]
     }
     </script>
   </head>
-
   <body>
-    <!-- Static form so Netlify can detect the "contact" form at build time (SPA companion to the React form on Home). -->
-    <form name="contact" method="POST" netlify data-netlify="true" data-netlify-honeypot="bot-field" style="display:none" aria-hidden="true">
-      <input type="text" name="name" />
-      <input type="email" name="email" />
-      <input type="tel" name="phone" />
-      <select name="service"><option></option></select>
+    <form name="hair-consultation" method="POST" data-netlify="true" netlify-honeypot="company" hidden>
+      <input type="hidden" name="form-name" value="hair-consultation" />
+      <input type="hidden" name="subject" value="New Beverly's consultation request from %{formName}" />
+      <input name="company" />
+      <input name="name" />
+      <input name="email" type="email" />
+      <input name="phone" type="tel" />
+      <input name="interest" />
       <textarea name="message"></textarea>
-      <input type="text" name="bot-field" />
     </form>
-    <!-- Static form so Netlify detects /free-guide submissions at build time. JS POSTs from the React app at runtime. -->
-    <form name="free-guide" netlify hidden>
+    <form name="appointment-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="appointment-request" />
+      <input type="hidden" name="subject" value="New Beverly's appointment request from %{formName}" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="phone" type="tel" />
+      <input name="email" type="email" />
+      <input name="service" />
+      <textarea name="message"></textarea>
+    </form>
+    <form name="free-guide" data-netlify="true" hidden>
       <input type="text" name="first_name" />
       <input type="email" name="email_address" />
       <input type="text" name="source" />
     </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Umami: uncomment and set VITE_ANALYTICS_ENDPOINT + VITE_ANALYTICS_WEBSITE_ID in .env (see Vite HTML env substitution). -->
-    <!--
-    <script defer src="%VITE_ANALYTICS_ENDPOINT%/umami" data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
-    -->
   </body>
-
 </html>

@@ -26,7 +26,7 @@ import type { Session, User } from "@supabase/supabase-js";
 import { supabase, type Profile, type Subscription, type Tier } from "@/lib/supabase";
 import { isAdminEmail } from "@/lib/admins";
 import { getProduct, tierSatisfies } from "@/lib/products";
-import { isPortalDemoUnlock } from "@/lib/portalDemoUnlock";
+import { isAcademyPasscodeMode, isPortalDemoUnlock } from "@/lib/portalDemoUnlock";
 
 interface AuthContextValue {
   loading: boolean;
@@ -45,6 +45,8 @@ interface AuthContextValue {
 
   /** Env flag: portal open without login (demo only). */
   portalDemoUnlock: boolean;
+  /** Edge-gated shared passcode preview. */
+  academyPasscodeMode: boolean;
   /** Admin OR demo unlock — full library UI, no paywall. */
   isUnrestricted: boolean;
 
@@ -147,8 +149,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // ── Compute tier & admin flag ──
   const portalDemoUnlock = isPortalDemoUnlock();
+  const academyPasscodeMode = isAcademyPasscodeMode();
   const isAdmin = Boolean(profile?.is_admin) || isAdminEmail(user?.email);
-  const isUnrestricted = isAdmin || portalDemoUnlock;
+  const isUnrestricted = isAdmin || portalDemoUnlock || academyPasscodeMode;
 
   const tier: Tier = (() => {
     if (!user) return "free";
@@ -165,7 +168,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const can = useCallback(
     (productSlug: string): boolean => {
       // Demo: show every product without Supabase session.
-      if (portalDemoUnlock) return true;
+      if (portalDemoUnlock || academyPasscodeMode) return true;
       // 1. Admin always wins.
       if (isAdmin) return true;
 
@@ -179,16 +182,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // 4. Tier check.
       return tierSatisfies(tier, product.requiredTier);
     },
-    [portalDemoUnlock, isAdmin, tier, user],
+    [portalDemoUnlock, academyPasscodeMode, isAdmin, tier, user],
   );
 
   const hasTier = useCallback(
     (requiredTier: Tier): boolean => {
-      if (portalDemoUnlock) return true;
+      if (portalDemoUnlock || academyPasscodeMode) return true;
       if (isAdmin) return true;
       return tierSatisfies(tier, requiredTier);
     },
-    [portalDemoUnlock, isAdmin, tier],
+    [portalDemoUnlock, academyPasscodeMode, isAdmin, tier],
   );
 
   // ── Auth actions ──
@@ -244,6 +247,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     tier,
     isAdmin,
     portalDemoUnlock,
+    academyPasscodeMode,
     isUnrestricted,
     can,
     hasTier,
